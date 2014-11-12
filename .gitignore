@@ -1,0 +1,12 @@
+# Directories
+.sass-cache/**
+_site/**
+coverage/**
+bower_components/**
+docs/**
+node_modules/**
+
+# Files
+.DS_Store
+.Thumbs.db
+npm-debug.log

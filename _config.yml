@@ -1,0 +1,17 @@
+---
+# Site settings
+baseurl: ""
+description: "Whitney IT Pty Ltd"
+email: "james@whitney.io"
+title: "Whitney IT Pty Ltd"
+url: "http://whitney.io"
+
+# Build settings
+encoding: "utf-8"
+exclude:
+    - "CNAME"
+    - "README.md"
+lsi: false
+port: 3333
+safe: true
+timezone: "Australia/Sydney"
