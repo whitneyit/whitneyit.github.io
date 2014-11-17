@@ -1,0 +1,13 @@
+# Directories
+.sass-cache/**
+_site/**
+bower_components/**
+coverage/**
+dist/**
+docs/**
+node_modules/**
+plato/**
+
+# Files
+build/include/head.js
+build/include/foot.js

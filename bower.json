@@ -1,0 +1,37 @@
+{
+  "name": "whitneyit",
+  "description": "Portfolio page for whitneyit",
+  "version": "0.0.1",
+  "homepage": "https://github.com/whitneyit/whitneyit.github.io",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:whitneyit/whitneyit.github.io.git"
+  },
+  "private": true,
+  "licenses": [
+    {
+      "type": "PROPRIETARY",
+      "url": "https://github.com/whitneyit/whitneyit.github.io/raw/master/LICENSE.md"
+    }
+  ],
+  "main": "dist/whitneyit.js",
+  "keywords": [
+    "whitneyit"
+  ],
+  "authors": [
+    "James Whitney <james@whitney.io>"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "normalize.css": "~3.0.2"
+  }
+}
