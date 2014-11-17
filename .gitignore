@@ -1,0 +1,16 @@
+# Directories
+.sass-cache/**
+_site/**
+bower_components/**
+coverage/**
+dist/**
+docs/**
+node_modules/**
+plato/**
+
+# Files
+.DS_Store
+.env.yml
+.env.*.yml
+.Thumbs.db
+npm-debug.log

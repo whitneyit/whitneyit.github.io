@@ -1,0 +1,18 @@
+" Directories
+set wildignore+=*/.git/**
+set wildignore+=*/.sass-cache/**
+set wildignore+=*/_site/**
+set wildignore+=*/assets/**
+set wildignore+=*/bower_components/**
+set wildignore+=*/coverage/**
+set wildignore+=*/dist/**
+set wildignore+=*/docs/**
+set wildignore+=*/node_modules/**
+
+" Files
+set wildignore+=*.DS_Store
+set wildignore+=*.Thumbs.db
+set wildignore+=*.npm-debug.log
+
+" Nerdtree specific ignore
+let NERDTreeIgnore += ['^.git$', '^.sass-cache$', '^_site$', '^assets$', '^bower_components$', '^coverage$', '^dist$', '^docs$', '^node_modules$']

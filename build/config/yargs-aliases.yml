@@ -1,0 +1,31 @@
+# These are the options that are consumed by `yargs.alias`.
+# https://github.com/chevex/yargs
+#
+# This are the abbrievations that can be passed to `gulp`. Instead of having to
+# use the full command like so:
+#
+# ```js
+# gulp build --clean --gzip --minify
+# ```
+#
+# You can just pass in simplified version like so:
+#
+# ```js
+# gulp build -cgm
+# ```
+#
+# It should be noted that the abbrievations are used on all `gulp` tasks and not
+# any single task. For instance, if you passed `-g` to `gulp lint` it will have
+# no affect. Yes the argument will be passed but nothing in that task is
+# listening for it.
+#
+# Likewise, you cannot have the same character represent different words in
+# different tasks. Although it is possible to setup, this project has not been
+# architected that way.
+---
+  c: clean
+  d: debug
+  e: env
+  f: force
+  g: gzip
+  m: minify
