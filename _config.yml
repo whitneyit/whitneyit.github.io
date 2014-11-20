@@ -20,6 +20,8 @@ exclude:
     - "plato"
     - "src"
     - "tests"
+    - "typings"
+    - "vendor"
     # Files
     - "_config.yml"
     - "bower.json"

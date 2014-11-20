@@ -1,3 +1,5 @@
+(function () { 'use strict';
+
 requirejs.config({
     'baseUrl' : '.',
     'deps' : [
@@ -35,3 +37,5 @@ requirejs.config({
         }
     }
 });
+
+})();

@@ -83,7 +83,7 @@
          */
         map = {
             '*' : {
-                'bower/handlebars' : 'hbs/handlebars'
+                // Copy any requirejs maps here.
             }
         },
 
@@ -96,32 +96,23 @@
          * full paths that are required.
          */
         paths = {
-            // Copy any requirejs paths here.
-        },
 
-        /**
-         * @name karma#plugins
-         *
-         * @description
-         * If you are using some of requirejs's plugins, you can can configure
-         * how they are defined here.
-         */
-        plugins = {
+            // Copy any requirejs paths here.
+
+            'angular' : 'assets/lib/angular/angular-1.3.3.min',
+            'jquery'  : 'assets/lib/jquery/jquery-2.1.1.min',
+            'ga'      : 'assets/vendor/ga/ga',
+            'css'     : 'assets/css',
+            'img'     : 'assets/img',
+            'js'      : 'assets/js'
+
+            ////////////////////////////////////////
+            //                                    //
+            //              PLUGINS               //
+            //                                    //
+            ////////////////////////////////////////
 
             // Place any plugin config Objects here.
-
-            /**
-             * @name karma#plugins-i18n
-             *
-             * @description
-             * Here we demonstrate how to configure the `i18n` plugin.
-             *
-             * // RequireJS Internationalization Plugin
-             * // https://github.com/requirejs/i18n/
-             * 'i18n' : {
-             *     'locale' : 'en-AU'
-             * }
-             */
 
         },
 
@@ -133,32 +124,18 @@
          * using any libraries so this is simply just an empty Object.
          */
         shim = {
-            // Copy any requirejs shims here.
-        },
-
-        // And lastly we define some variables to be used to aid in attaching
-        // the above config to the requirejs config Object.
-        config,
-        plugin;
-
-    // Here we attach all of our above config to this one `config` variable.
-    // This is what will be passed to the `requirejs.config` method.
-    config = {
-        'baseUrl'  : baseUrl,
-        'callback' : callback,
-        'deps'     : deps,
-        'map'      : map,
-        'paths'    : paths,
-        'shim'     : shim
-    };
-
-    // Next we attach our plugins to the `config` Object making sure that we
-    // don't copy in any properties weren't defined on `config` directly.
-    for (plugin in plugins) {
-        if (Object.prototype.hasOwnProperty.call(plugins, plugin)) {
-            config[plugin] = plugins[plugin];
-        }
-    }
+            'angular' : {
+                'deps'    : ['jquery'],
+                'exports' : 'angular'
+            },
+            'ga' : {
+                'init' : function () {
+                    var _gaq = [];
+                    _gaq.push(['_setAccount', 'UA-17120667-1']);
+                    _gaq.push(['_trackPageview']);
+                }
+            }
+        };
 
     /**
      * @name karma
@@ -167,6 +144,13 @@
      * With all the above stuff defined, we can simply just pass the settings
      * across to `requirejs`.
      */
-    requirejs.config(config);
+    requirejs.config({
+        'baseUrl'  : baseUrl,
+        'callback' : callback,
+        'deps'     : deps,
+        'map'      : map,
+        'paths'    : paths,
+        'shim'     : shim
+    });
 
 })(this);
