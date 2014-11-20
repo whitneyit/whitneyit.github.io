@@ -1,0 +1,82 @@
+{
+    ////////////////////////////////////////
+    //                                    //
+    // Options                            //
+    //                                    //
+    ////////////////////////////////////////
+    "additionalRules": null,
+    // "preset": null,
+    "excludeFiles": ["bower_components/**", "node_modules/**"],
+    "fileExtensions": [".js"],
+
+    ////////////////////////////////////////
+    //                                    //
+    // Extras                             //
+    //                                    //
+    ////////////////////////////////////////
+    // "maximumLineLength": {"allowComments": false, "allowRegex": true, "allowUrlComments": true, "tabSize": 4, "value": 80}, // Unused
+    "safeContextKeyword": ["that"],
+    "validateIndentation": 4,
+    "validateJSDoc": {"checkParamNames": true, "checkRedundantParams": false, "requireParamTypes": true},
+    "validateLineBreaks": "LF",
+    "validateQuoteMarks": "'",
+
+    ////////////////////////////////////////
+    //                                    //
+    // Rules - just disallow              //
+    //                                    //
+    ////////////////////////////////////////
+    // "disallowDanglintUnderscores": true, // Unused
+    "disallowEmptyBlocks": true,
+    "disallowImplicitTypeConversion": ["boolean", "numeric", "string"],
+    "disallowKeywords": ["with"],
+    "disallowMixedSpacesAndTabs": true,
+    "disallowMultipleLineBreaks": true,
+    "disallowMultipleLineStrings": true,
+    // "disallowQuotedKeysInObjects": "allButReserved", // Unused
+    "disallowTrailingWhitespace": true,
+
+    ////////////////////////////////////////
+    //                                    //
+    // Rules - just require               //
+    //                                    //
+    ////////////////////////////////////////
+    // "requireAlignedObjectValues": "ignoreLineBreak", // Unused
+    // "requireBlocksOnNewline": true, // Unused
+    "requireCapitalizedConstructors": true,
+    "requireCurlyBraces": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch", "finally"],
+    "requireDotNotation": true,
+    "requireLineFeedAtFileEnd": true,
+    "requireOperatorBeforeLineBreak": ["?", "/", "*", "+", "-", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+    "requireParenthesesAroundIIFE": true,
+
+    ////////////////////////////////////////
+    //                                    //
+    // Rules - disallow or require        //
+    //                                    //
+    ////////////////////////////////////////
+    "disallowKeywordsOnNewLine": ["else, catch, finally"],
+    "disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
+    "disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
+    "disallowSpacesInsideArrayBrackets": true,
+    "disallowSpacesInsideObjectBrackets": true,
+    "disallowSpacesInsideParentheses": true,
+    "disallowTrailingComma": true,
+    "disallowYodaConditions": true,
+    "requireMultipleVarDecl": "onevar",
+    "requireCamelCaseOrUpperCaseIdentifiers": true,
+    "requireCommaBeforeLineBreak": true,
+    // "requirePaddingNewlinesInBlocks": 1, // Unused
+    "requireSpaceAfterBinaryOperators": ["?", "/", "*", "+", "-", "=", "==", "===", "!=", "!==", ">", "<", ">=", "<="],
+    "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch", "function"],
+    // "requireSpaceAfterLineComment": true, // Unused
+    "requireSpaceAfterObjectKeys": true,
+    "requireSpaceBeforeBinaryOperators": ["?", "/", "*", "+", "-", "=", "==", "===", "!=", "!==", ">", "<", ">=", "<="],
+    "requireSpaceBeforeBlockStatements": true,
+    "requireSpacesInAnonymousFunctionExpression": { "beforeOpeningRoundBrace": true, "beforeOpeningCurlyBrace": true },
+    "requireSpacesInConditionalExpression": {"afterTest": true, "beforeConsequent": true, "afterConsequent": true, "beforeAlternate": true},
+    // "requireSpacesInFunction": { "beforeOpeningRoundBrace": true, "beforeOpeningCurlyBrace": true }, // Available in 1.5.8, gulp-jscs uses 1.4.3
+    "requireSpacesInFunctionDeclaration": { "beforeOpeningRoundBrace": true, "beforeOpeningCurlyBrace": true },
+    "requireSpacesInFunctionExpression": { "beforeOpeningRoundBrace": true, "beforeOpeningCurlyBrace": true },
+    "requireSpacesInNamedFunctionExpression": { "beforeOpeningRoundBrace": true, "beforeOpeningCurlyBrace": true }
+}

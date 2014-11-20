@@ -9,8 +9,5 @@ node_modules/**
 plato/**
 
 # Files
-.DS_Store
-.env.yml
-.env.*.yml
-.Thumbs.db
-npm-debug.log
+build/include/head.js
+build/include/foot.js

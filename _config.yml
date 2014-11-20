@@ -9,8 +9,30 @@ url: "http://whitney.io"
 # Build settings
 encoding: "utf-8"
 exclude:
+    # Directories
+    - "bower_components"
+    - "build"
+    - "coverage"
+    - "dist"
+    - "docs"
+    - "lib"
+    - "node_modules"
+    - "plato"
+    - "src"
+    - "tests"
+    - "typings"
+    - "vendor"
+    # Files
+    - "_config.yml"
+    - "bower.json"
     - "CNAME"
+    - "gulpfile.js"
+    - "karma.conf.js"
+    - "LICENSE.md"
+    - "npm-debug.log"
+    - "package.json"
     - "README.md"
+    - "tsd.json"
 lsi: false
 port: 3333
 safe: true
