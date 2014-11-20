@@ -20,6 +20,8 @@ exclude:
     - "plato"
     - "src"
     - "tests"
+    - "typings"
+    - "vendor"
     # Files
     - "_config.yml"
     - "bower.json"
@@ -30,6 +32,7 @@ exclude:
     - "npm-debug.log"
     - "package.json"
     - "README.md"
+    - "tsd.json"
 lsi: false
 port: 3333
 safe: true
