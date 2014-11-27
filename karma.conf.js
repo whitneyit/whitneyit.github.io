@@ -35,12 +35,28 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         'files' : [
             {
-                'pattern'  : 'assets/**/*.js',
+                'pattern'  : 'assets/js/app/**/*.js',
+                'included' : false
+            },
+            {
+                'pattern'  : 'assets/js/app.js',
+                'included' : false
+            },
+            {
+                'pattern'  : 'assets/lib/**/*.js',
+                'included' : false
+            },
+            {
+                'pattern'  : 'assets/vendor/**/*.js',
                 'included' : false
             },
             {
                 'pattern'  : 'tests/specs/**/*.spec.js',
                 'included' : false
+            },
+            {
+                'pattern'  : 'assets/js/main.config.js',
+                'included' : true
             },
             {
                 'pattern'  : 'tests/karma.main.js',

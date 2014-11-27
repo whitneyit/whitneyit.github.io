@@ -29,6 +29,7 @@ var
     cssmin     = require('gulp-cssmin'),
     eslint     = require('gulp-eslint'),
     gif        = require('gulp-if'),
+    gfilter    = require('gulp-filter'),
     gzip       = require('gulp-gzip'),
     header     = require('gulp-header'),
     image      = require('gulp-image'),
@@ -80,6 +81,9 @@ var
         if (fs.existsSync('/home/travis')) {
             console.log('Travis detected. Setting environment to "testing"');
             return 'testing';
+        }
+        if (argv._[0] === 'release') {
+            return 'production';
         }
         return envName;
     }),
@@ -235,18 +239,20 @@ gulp.task('build:img', ['clean:assets:img'], function () {
 
 // Pre-processes our `main.js` file.
 gulp.task('build:js:main', ['clean:assets:js'], function () {
-    return gulp.src(['src/js/main.js'])
+    return gulp.src(['src/js/main.config.js', 'src/js/main.bootstrap.js'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
         .pipe(chmod(755))
-        .pipe(header(head, stamp))
-        .pipe(footer(foot, stamp))
         .pipe(gif(argv.minify, uglify({
             'preserveComments' : 'some'
         })))
         .pipe(gif(argv.gzip, gzip({
             'append' : false
         })))
+        .pipe(gulp.dest('assets/js'))
+        .pipe(concat('main.js'))
+        .pipe(header(head, stamp))
+        .pipe(footer(foot, stamp))
         .pipe(gulp.dest('assets/js'))
         .pipe(size({
             'showFiles' : true
@@ -316,12 +322,16 @@ gulp.task('copy:assets:vendor', ['clean:assets:vendor'], function () {
 
 // Copy our media to the `root` directory.
 gulp.task('copy:root', ['clean:root'], function () {
+    var filter = gfilter(['*', '!favicon.ico']);
     return gulp.src([
             'src/favicon.ico',
             'src/humans.txt',
             'src/index.html',
             'src/robots.txt'
         ])
+        .pipe(filter)
+        .pipe(tmpl(stamp))
+        .pipe(filter.restore())
         .pipe(chmod(755))
         .pipe(gulp.dest('.'));
 });
@@ -488,7 +498,7 @@ gulp.task('psi', function (done) {
     psi({
         'nokey'    : 'true',
         'strategy' : 'desktop',
-        'url'      : stamp.env.data.site
+        'url'      : env.data.site
     }, done);
 });
 
@@ -504,7 +514,7 @@ gulp.task('release', ['jekyll'], function (done) {
         logErr('Incorrect environment for release.');
         return done();
     }
-    isBranch('master')
+    return isBranch('master')
         .then(function () {
             return;
         })
