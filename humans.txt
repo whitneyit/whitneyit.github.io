@@ -12,6 +12,6 @@
 # TECHNOLOGY COLOPHON
 
     CSS3, HTML5, JS
-    GitHub Pages, Gulp, Jekyll, RequireJS
+    GitHub Pages, Gulp, Jekyll, RequireJS, TypeScript
 
     Source: https://github.com/whitneyit/whitneyit.github.io

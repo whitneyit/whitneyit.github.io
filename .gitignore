@@ -7,6 +7,7 @@ dist/**
 docs/**
 node_modules/**
 plato/**
+typings/**
 
 # Files
 .DS_Store

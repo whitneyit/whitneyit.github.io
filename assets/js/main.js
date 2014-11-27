@@ -2,10 +2,6 @@
 
 requirejs.config({
     'baseUrl' : '.',
-    'deps' : [
-        'js/bootstrap',
-        'ga'
-    ],
     'paths' : {
         'angular' : [
             '//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min',
@@ -27,15 +23,14 @@ requirejs.config({
         'angular' : {
             'deps'    : ['jquery'],
             'exports' : 'angular'
-        },
-        'ga' : {
-            'init' : function () {
-                var _gaq = [];
-                _gaq.push(['_setAccount', 'UA-17120667-1']);
-                _gaq.push(['_trackPageview']);
-            }
         }
     }
+});
+
+requirejs(['angular', 'js/app/name',  'js/app', 'ga'], function (angular, appName) {
+    angular.element(document).ready(function () {
+        angular.bootstrap(document, [appName]);
+    });
 });
 
 })();

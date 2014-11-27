@@ -43,6 +43,7 @@ var
     serve      = require('gulp-serve'),
     size       = require('gulp-size'),
     tmpl       = require('gulp-template'),
+    ts         = require('gulp-typescript'),
     uglify     = require('gulp-uglify'),
 
     // Logs out a mssage to the console as an Error.
@@ -68,18 +69,24 @@ var
         };
     },
 
-    // Determine the environment and grab the `envData`.
-    env = de(),
-
-    // Grab our "wrapping" files to be used by `gulp-header` and `gulp-footer`.
-    head = fs.readFileSync('build/include/head.js'),
-    foot = fs.readFileSync('build/include/foot.js'),
-
     // Grab the config files our build task depends upon.
     args = yaml(fs.readFileSync('build/config/yargs-aliases.yml')),
 
     // Define our cli argument aliases.
     argv = yargs.alias(args).argv,
+
+    // Determine the environment and grab the `envData`.
+    env = de(function (envName) {
+        if (fs.existsSync('/home/travis')) {
+            console.log('Travis detected. Setting environment to "testing"');
+            return 'testing';
+        }
+        return envName;
+    }),
+
+    // Grab our "wrapping" files to be used by `gulp-header` and `gulp-footer`.
+    head = fs.readFileSync('build/include/head.js'),
+    foot = fs.readFileSync('build/include/foot.js'),
 
     // The port to be used when serving directories
     port = 3333,
@@ -88,7 +95,19 @@ var
     stamp = {
         'env' : env,
         'pkg' : pkg
-    };
+    },
+
+    // Configure the `gulp-typescript` plugin.
+    tsProject = ts.createProject({
+        'declarationFiles'  : false,
+        'module'            : 'amd',
+        'noExternalResolve' : false,
+        'noImplicitAny'     : true,
+        'noLib'             : false,
+        'removeComments'    : true,
+        'sortOutput'        : true,
+        'target'            : 'es5'
+    });
 
 // Convert the some arguments to Booleans.
 argv.clean  = argToBool(argv, 'clean');
@@ -119,11 +138,6 @@ gulp.task('clean:assets:img', function (done) {
     del(['assets/img'], clean('assets/img', done));
 });
 
-// Cleans the `assets/js` directory.
-gulp.task('clean:assets:js', function (done) {
-    del(['assets/js'], clean('assets/js', done));
-});
-
 // Cleans the `assets/lib` directory.
 gulp.task('clean:assets:lib', function (done) {
     del(['assets/lib'], clean('assets/lib', done));
@@ -149,9 +163,14 @@ gulp.task('clean:assets:media', function (done) {
     del(['assets/media'], clean('assets/media', done));
 });
 
-// Cleans the `assets/scss` directory.
-gulp.task('clean:assets:scss', function (done) {
-    del(['assets/scss'], clean('assets/scss', done));
+// Cleans the `assets/css` directory.
+gulp.task('clean:assets:css', function (done) {
+    del(['assets/css'], clean('assets/css', done));
+});
+
+// Cleans the `assets/js` directory.
+gulp.task('clean:assets:js', function (done) {
+    del(['assets/js'], clean('assets/js', done));
 });
 
 // Cleans the `assets/vendor` directory.
@@ -191,7 +210,7 @@ gulp.task('clean:root', function (done) {
 ////////////////////////////////////////
 
 // Pre-processes our SCSS files.
-gulp.task('build:scss', ['clean:assets:scss'], function () {
+gulp.task('build:scss', ['clean:assets:css'], function () {
     return gulp.src(['bower_components/normalize.css/normalize.css', 'src/scss/main.scss'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
@@ -214,8 +233,8 @@ gulp.task('build:img', ['clean:assets:img'], function () {
         .pipe(gulp.dest('assets/img'));
 });
 
-// Pre-processes our JavaScript files.
-gulp.task('build:js:main', ['clean:assets:js'], function (done) {
+// Pre-processes our `main.js` file.
+gulp.task('build:js:main', ['clean:assets:js'], function () {
     return gulp.src(['src/js/main.js'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
@@ -234,11 +253,13 @@ gulp.task('build:js:main', ['clean:assets:js'], function (done) {
         }));
 });
 
-// Pre-processes our JavaScript files.
-gulp.task('build:js', ['build:js:main'], function (done) {
-    return gulp.src(['src/js/**/*.js', '!src/js/main.js'])
+// Pre-processes our TypeScript files.
+gulp.task('build:ts', ['build:js:main'], function () {
+    return gulp.src(['src/ts/**/*.ts', 'typings/**/*.d.ts'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
+        .pipe(ts(tsProject))
+        .js
         .pipe(chmod(755))
         .pipe(gif(argv.minify, uglify({
             'preserveComments' : 'some'
@@ -322,7 +343,7 @@ gulp.task('lint:scss', function () {
 
 // Lints our JavaScript files.
 gulp.task('lint:js', function () {
-    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js', 'src/js/**/*.js', 'tests/**/*.js'])
+    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js'])
         .pipe(tmpl(stamp))
         .pipe(eslint())
         .pipe(eslint.format())
@@ -348,8 +369,8 @@ gulp.task('lint:json', function () {
 // Build our codebase.
 gulp.task('build', [
     'build:img',
-    'build:js',
-    'build:scss'
+    'build:scss',
+    'build:ts'
 ]);
 
 // Cleans the asset subdirectories.
@@ -361,11 +382,11 @@ gulp.task('clean:assets:lib:all', [
 
 // Cleans the asset subdirectories.
 gulp.task('clean:assets:all', [
+    'clean:assets:css',
     'clean:assets:img',
     'clean:assets:js',
     'clean:assets:lib',
     'clean:assets:media',
-    'clean:assets:scss',
     'clean:assets:vendor'
 ]);
 
@@ -447,14 +468,14 @@ gulp.task('serve:site', serve({
 
 // Generates our docs using JSDoc.
 gulp.task('doc', ['clean:docs'], function () {
-    return gulp.src(['gulpfile.js', 'lib/**/*.js', 'src/js/**/*.js', 'tests/**/*.js'])
+    return gulp.src(['gulpfile.js', 'lib/**/*.js', 'src/ts/**/*.ts', 'tests/**/*.ts'])
         .pipe(tmpl(stamp))
         .pipe(jsdoc('docs'));
 });
 
 // Generate complexity analysis.
 gulp.task('plato', ['clean:plato'], function () {
-    return gulp.src(['src/js/**/*.js'])
+    return gulp.src(['src/ts/**/*.ts'])
         .pipe(plato('plato', {
             'complexity' : {
                 'trycatch' : true
@@ -500,7 +521,7 @@ gulp.task('release', ['jekyll'], function (done) {
 ////////////////////////////////////////
 
 // Tests our specs.
-gulp.task('test', ['clean:coverage'], function () {
+gulp.task('test', ['clean:coverage', 'build', 'copy'], function () {
     return gulp.src(['./fake'])
         .on('error', gutil.log)
         .pipe(karma({

@@ -71,7 +71,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         'preprocessors' : {
-            'src/**/*.js' : ['lodash', 'typescript']
+            'assets/js/**/*.js' : ['coverage']
         },
 
         // test results reporter to use
@@ -103,13 +103,17 @@ module.exports = function (config) {
             'dir'       : 'coverage',
             'reporters' : [
                 {
+                    'type'   : 'lcov',
+                    'subdir' : 'lcov'
+                },
+                {
                     'type' : 'html'
                 },
                 {
                     'type' : 'text-summary'
                 }
             ]
-        },
+        }
 
     });
 
