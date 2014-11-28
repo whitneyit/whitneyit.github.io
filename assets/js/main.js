@@ -1,34 +1,38 @@
-requirejs.config({
-    'baseUrl': '.',
-    'deps': [
-        'assets/js/bootstrap',
-        'ga'
-    ],
-    'paths': {
-        'angular': [
+(function () { 'use strict';
+
+window.rjsconfig = {
+    'baseUrl' : '.',
+    'paths' : {
+        'angular' : [
             '//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min',
             'assets/lib/angular/angular-1.3.3.min'
         ],
-        'jquery': [
+        'jquery' : [
             '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
             'assets/lib/jquery/jquery-2.1.1.min'
         ],
-        'ga': [
+        'ga' : [
             '//google-analytics.com/ga',
             'assets/vendor/ga/ga'
-        ]
+        ],
+        'css' : 'assets/css',
+        'img' : 'assets/img',
+        'js'  : 'assets/js'
     },
-    'shim': {
-        'angular': {
-            'deps': ['jquery'],
-            'exports': 'angular'
-        },
-        'ga': {
-            'init': function () {
-                var _gaq = [];
-                _gaq.push(['_setAccount', 'UA-17120667-1']);
-                _gaq.push(['_trackPageview']);
-            }
+    'shim' : {
+        'angular' : {
+            'deps'    : ['jquery'],
+            'exports' : 'angular'
         }
     }
+};
+
+requirejs.config(window.rjsconfig);
+
+requirejs(['angular', 'js/app/name',  'js/app', 'ga'], function (angular, appName) {
+    angular.element(document).ready(function () {
+        angular.bootstrap(document, [appName]);
+    });
 });
+
+})();
