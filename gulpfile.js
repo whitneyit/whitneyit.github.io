@@ -10,12 +10,13 @@ var
 
     // Grab any packages they we have written.
     argToBool  = require('./lib/argToBool'),
+    clean      = require('./lib/clean'),
     isBranch   = require('./lib/isBranch'),
+    log        = require('./lib/log'),
     middle     = require('./lib/middle'),
 
     // Grab our non gulp packages.
     de         = require('detect-environment'),
-    del        = require('del'),
     psi        = require('psi'),
     yaml       = require('js-yaml').safeLoad,
     yargs      = require('yargs'),
@@ -47,29 +48,6 @@ var
     ts         = require('gulp-typescript'),
     uglify     = require('gulp-uglify'),
 
-    // Logs out a mssage to the console as an Error.
-    logErr = function (msg) {
-        /*eslint no-console:0 */
-        console.log(gutil.colors.red(msg));
-    },
-
-    // Logs out a mssage to the console as Info.
-    logInfo = function (msg) {
-        /*eslint no-console:0 */
-        console.log(gutil.colors.blue(msg));
-    },
-
-    // The callback to to `del` package.
-    clean = function (directory, done) {
-        return function (err) {
-            if (err) {
-                throw err;
-            }
-            logInfo('Cleaned the "' + directory + '" directory.');
-            done();
-        };
-    },
-
     // Grab the config files our build task depends upon.
     args = yaml(fs.readFileSync('build/config/yargs-aliases.yml')),
 
@@ -79,10 +57,11 @@ var
     // Determine the environment and grab the `envData`.
     env = de(function (envName) {
         if (fs.existsSync('/home/travis')) {
-            console.log('Travis detected. Setting environment to "testing"');
+            log.info('Travis detected. Setting environment to "testing"');
             return 'testing';
         }
         if (argv._[0] === 'release') {
+            log.info('Release detected. Setting environment to "production"');
             return 'production';
         }
         return envName;
@@ -134,77 +113,77 @@ if (env.base) {
 
 // Cleans the `assets` directory.
 gulp.task('clean:assets', function (done) {
-    del(['assets'], clean('assets', done));
+    clean('assets', done);
 });
 
 // Cleans the `assets/img` directory.
 gulp.task('clean:assets:img', function (done) {
-    del(['assets/img'], clean('assets/img', done));
+    clean('assets/img', done);
 });
 
 // Cleans the `assets/lib` directory.
 gulp.task('clean:assets:lib', function (done) {
-    del(['assets/lib'], clean('assets/lib', done));
+    clean('assets/lib', done);
 });
 
 // Cleans the `assets/lib/angular` directory.
 gulp.task('clean:assets:lib:angular', function (done) {
-    del(['assets/lib/angular'], clean('assets/lib/angular', done));
+    clean('assets/lib/angular', done);
 });
 
 // Cleans the `assets/lib/jquery` directory.
 gulp.task('clean:assets:lib:jquery', function (done) {
-    del(['assets/lib/jquery'], clean('assets/lib/jquery', done));
+    clean('assets/lib/jquery', done);
 });
 
 // Cleans the `assets/lib/requirejs` directory.
 gulp.task('clean:assets:lib:requirejs', function (done) {
-    del(['assets/lib/requirejs'], clean('assets/lib/requirejs', done));
+    clean('assets/lib/requirejs', done);
 });
 
 // Cleans the `assets/media` directory.
 gulp.task('clean:assets:media', function (done) {
-    del(['assets/media'], clean('assets/media', done));
+    clean('assets/media', done);
 });
 
 // Cleans the `assets/css` directory.
 gulp.task('clean:assets:css', function (done) {
-    del(['assets/css'], clean('assets/css', done));
+    clean('assets/css', done);
 });
 
 // Cleans the `assets/js` directory.
 gulp.task('clean:assets:js', function (done) {
-    del(['assets/js'], clean('assets/js', done));
+    clean('assets/js', done);
 });
 
 // Cleans the `assets/vendor` directory.
 gulp.task('clean:assets:vendor', function (done) {
-    del(['assets/vendor'], clean('assets/vendor', done));
+    clean('assets/vendor', done);
 });
 
 // Cleans the `coverage` directory.
 gulp.task('clean:coverage', function (done) {
-    del(['coverage'], clean('coverage', done));
+    clean('coverage', done);
 });
 
 // Cleans the `docs` directory.
 gulp.task('clean:docs', function (done) {
-    del(['docs'], clean('docs', done));
+    clean('docs', done);
 });
 
 // Cleans the `plato` directory.
 gulp.task('clean:plato', function (done) {
-    del(['plato'], clean('plato', done));
+    clean('plato', done);
 });
 
 // Cleans the `root` directory.
 gulp.task('clean:root', function (done) {
-    del([
+    clean([
         'favicon.ico',
         'humans.txt',
         'index.html',
         'robots.txt'
-    ], clean('root', done));
+    ], 'root', done);
 });
 
 ////////////////////////////////////////
@@ -366,7 +345,7 @@ gulp.task('lint:json', function () {
         .pipe(tmpl(stamp))
         .pipe(jsonlint())
         .pipe(jsonlint.reporter(function (file) {
-            logErr('File "' + file.path + '" is not valid JSON');
+            log.err('File "' + file.path + '" is not valid JSON');
         }));
 });
 
@@ -511,7 +490,7 @@ gulp.task('psi', function (done) {
 // Publish the codebase.
 gulp.task('release', ['jekyll'], function (done) {
     if (!argv.force && !env.base) {
-        logErr('Incorrect environment for release.');
+        log.err('Incorrect environment for release.');
         return done();
     }
     return isBranch('master')
@@ -519,7 +498,7 @@ gulp.task('release', ['jekyll'], function (done) {
             return;
         })
         .catch(function (err) {
-            logErr(err);
+            log.err(err);
             return err;
         });
 });
