@@ -10,11 +10,11 @@ var
 
     // Grab any packages they we have written.
     argToBool  = require('./lib/argToBool'),
-    getEnv     = require('./lib/getEnv'),
     isBranch   = require('./lib/isBranch'),
     middle     = require('./lib/middle'),
 
     // Grab our non gulp packages.
+    de         = require('detect-environment'),
     del        = require('del'),
     psi        = require('psi'),
     yaml       = require('js-yaml').safeLoad,
@@ -29,6 +29,7 @@ var
     cssmin     = require('gulp-cssmin'),
     eslint     = require('gulp-eslint'),
     gif        = require('gulp-if'),
+    gfilter    = require('gulp-filter'),
     gzip       = require('gulp-gzip'),
     header     = require('gulp-header'),
     image      = require('gulp-image'),
@@ -69,29 +70,48 @@ var
         };
     },
 
-    // If any errors went wrong with our environment file.
-    envErr,
-
-    // Grab our "wrapping" files to be used by `gulp-header` and `gulp-footer`.
-    head = fs.readFileSync('build/include/head.js'),
-    foot = fs.readFileSync('build/include/foot.js'),
-
-    // Whether or not we are running within the production environment.
-    prod = true,
-
     // Grab the config files our build task depends upon.
     args = yaml(fs.readFileSync('build/config/yargs-aliases.yml')),
 
     // Define our cli argument aliases.
     argv = yargs.alias(args).argv,
 
+    // Determine the environment and grab the `envData`.
+    env = de(function (envName) {
+        if (fs.existsSync('/home/travis')) {
+            console.log('Travis detected. Setting environment to "testing"');
+            return 'testing';
+        }
+        if (argv._[0] === 'release') {
+            return 'production';
+        }
+        return envName;
+    }),
+
+    // Grab our "wrapping" files to be used by `gulp-header` and `gulp-footer`.
+    head = fs.readFileSync('build/include/head.js'),
+    foot = fs.readFileSync('build/include/foot.js'),
+
     // The port to be used when serving directories
     port = 3333,
 
     // Here we stub out an Object to use in `lodash` templating.
     stamp = {
+        'env' : env,
         'pkg' : pkg
-    };
+    },
+
+    // Configure the `gulp-typescript` plugin.
+    tsProject = ts.createProject({
+        'declarationFiles'  : false,
+        'module'            : 'amd',
+        'noExternalResolve' : false,
+        'noImplicitAny'     : true,
+        'noLib'             : false,
+        'removeComments'    : true,
+        'sortOutput'        : true,
+        'target'            : 'es5'
+    });
 
 // Convert the some arguments to Booleans.
 argv.clean  = argToBool(argv, 'clean');
@@ -100,24 +120,8 @@ argv.force  = argToBool(argv, 'force');
 argv.gzip   = argToBool(argv, 'gzip');
 argv.minify = argToBool(argv, 'minify');
 
-// Parse the environment file.
-try {
-
-    // Assign the environment `name` and `data` to the `stamp` Object.
-    stamp.env = getEnv(argv, 'env');
-
-    // Determine if we are still in the production environment
-    if (stamp.env.name !== 'production') {
-        prod = false;
-    }
-
-// Update `envVar` with the error that came back from `getEnv`.
-} catch (err) {
-    envErr = err;
-}
-
 // If we are in a production environment, override some arguments.
-if (prod) {
+if (env.base) {
     argv.debug  = false;
     argv.minify = true;
 }
@@ -136,11 +140,6 @@ gulp.task('clean:assets', function (done) {
 // Cleans the `assets/img` directory.
 gulp.task('clean:assets:img', function (done) {
     del(['assets/img'], clean('assets/img', done));
-});
-
-// Cleans the `assets/js` directory.
-gulp.task('clean:assets:js', function (done) {
-    del(['assets/js'], clean('assets/js', done));
 });
 
 // Cleans the `assets/lib` directory.
@@ -168,9 +167,14 @@ gulp.task('clean:assets:media', function (done) {
     del(['assets/media'], clean('assets/media', done));
 });
 
-// Cleans the `assets/scss` directory.
-gulp.task('clean:assets:scss', function (done) {
-    del(['assets/scss'], clean('assets/scss', done));
+// Cleans the `assets/css` directory.
+gulp.task('clean:assets:css', function (done) {
+    del(['assets/css'], clean('assets/css', done));
+});
+
+// Cleans the `assets/js` directory.
+gulp.task('clean:assets:js', function (done) {
+    del(['assets/js'], clean('assets/js', done));
 });
 
 // Cleans the `assets/vendor` directory.
@@ -210,13 +214,10 @@ gulp.task('clean:root', function (done) {
 ////////////////////////////////////////
 
 // Pre-processes our SCSS files.
-gulp.task('build:scss', ['clean:assets:scss'], function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
+gulp.task('build:scss', ['clean:assets:css'], function () {
     return gulp.src(['bower_components/normalize.css/normalize.css', 'src/scss/main.scss'])
         .on('error', gutil.log)
+        .pipe(tmpl(stamp))
         .pipe(concat('whitneyit.css'))
         .pipe(sass())
         .pipe(gif(argv.minify, cssmin()))
@@ -231,35 +232,17 @@ gulp.task('build:scss', ['clean:assets:scss'], function (done) {
 // Pre-processes our image files.
 gulp.task('build:img', ['clean:assets:img'], function () {
     return gulp.src(['src/img/**/*'])
-        .pipe(gif(prod, image()))
+        .pipe(gif(env.base, image()))
         .pipe(chmod(755))
         .pipe(gulp.dest('assets/img'));
 });
 
-// Pre-processes our JavaScript files.
-gulp.task('build:ts:main', ['clean:assets:js'], function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
-    var result = gulp.src(['src/ts/main.ts'])
+// Pre-processes our `main.js` file.
+gulp.task('build:js:main', ['clean:assets:js'], function () {
+    return gulp.src(['src/js/main.config.js', 'src/js/main.bootstrap.js'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
-        .pipe(ts({
-            'declarationFiles'  : true,
-            'module'            : 'amd',
-            'noExternalResolve' : false,
-            'noImplicitAny'     : true,
-            'noLib'             : false,
-            'sourceRoot'        : 'TODO',
-            'sortOutput'        : true,
-            'removeComments'    : true,
-            'target'            : 'es5'
-        }));
-    return result.js
         .pipe(chmod(755))
-        .pipe(header(head, stamp))
-        .pipe(footer(foot, stamp))
         .pipe(gif(argv.minify, uglify({
             'preserveComments' : 'some'
         })))
@@ -267,32 +250,22 @@ gulp.task('build:ts:main', ['clean:assets:js'], function (done) {
             'append' : false
         })))
         .pipe(gulp.dest('assets/js'))
+        .pipe(concat('main.js'))
+        .pipe(header(head, stamp))
+        .pipe(footer(foot, stamp))
+        .pipe(gulp.dest('assets/js'))
         .pipe(size({
             'showFiles' : true
         }));
 });
 
 // Pre-processes our TypeScript files.
-gulp.task('build:ts', ['build:ts:main'], function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
-    var result = gulp.src(['src/ts/**/*.ts', '!src/ts/main.ts'])
+gulp.task('build:ts', ['build:js:main'], function () {
+    return gulp.src(['src/ts/**/*.ts', 'typings/**/*.d.ts'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
-        .pipe(ts({
-            'declarationFiles'  : true,
-            'module'            : 'amd',
-            'noExternalResolve' : false,
-            'noImplicitAny'     : true,
-            'noLib'             : false,
-            'sourceRoot'        : 'TODO',
-            'sortOutput'        : true,
-            'removeComments'    : false,
-            'target'            : 'es5'
-        }));
-    return result.js
+        .pipe(ts(tsProject))
+        .js
         .pipe(chmod(755))
         .pipe(gif(argv.minify, uglify({
             'preserveComments' : 'some'
@@ -349,12 +322,16 @@ gulp.task('copy:assets:vendor', ['clean:assets:vendor'], function () {
 
 // Copy our media to the `root` directory.
 gulp.task('copy:root', ['clean:root'], function () {
+    var filter = gfilter(['*', '!favicon.ico']);
     return gulp.src([
             'src/favicon.ico',
             'src/humans.txt',
             'src/index.html',
             'src/robots.txt'
         ])
+        .pipe(filter)
+        .pipe(tmpl(stamp))
+        .pipe(filter.restore())
         .pipe(chmod(755))
         .pipe(gulp.dest('.'));
 });
@@ -367,11 +344,7 @@ gulp.task('jekyll', ['copy', 'build'], function (done) {
 });
 
 // Lints our CSS files.
-gulp.task('lint:scss', function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
+gulp.task('lint:scss', function () {
     return gulp.src(['src/scss/main.scss'])
         .pipe(tmpl(stamp))
         .pipe(sass())
@@ -379,12 +352,8 @@ gulp.task('lint:scss', function (done) {
 });
 
 // Lints our JavaScript files.
-gulp.task('lint:js', function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
-    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js', 'src/js/**/*.js', 'tests/**/*.js'])
+gulp.task('lint:js', function () {
+    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js'])
         .pipe(tmpl(stamp))
         .pipe(eslint())
         .pipe(eslint.format())
@@ -392,11 +361,7 @@ gulp.task('lint:js', function (done) {
 });
 
 // Lints our JSON files.
-gulp.task('lint:json', function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
+gulp.task('lint:json', function () {
     return gulp.src(['.bowerrc', 'bower.json', 'package.json'])
         .pipe(tmpl(stamp))
         .pipe(jsonlint())
@@ -427,11 +392,11 @@ gulp.task('clean:assets:lib:all', [
 
 // Cleans the asset subdirectories.
 gulp.task('clean:assets:all', [
+    'clean:assets:css',
     'clean:assets:img',
     'clean:assets:js',
     'clean:assets:lib',
     'clean:assets:media',
-    'clean:assets:scss',
     'clean:assets:vendor'
 ]);
 
@@ -512,23 +477,15 @@ gulp.task('serve:site', serve({
 ////////////////////////////////////////
 
 // Generates our docs using JSDoc.
-gulp.task('doc', ['clean:docs'], function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
-    return gulp.src(['gulpfile.js', 'lib/**/*.js', 'src/js/**/*.js', 'tests/**/*.js'])
+gulp.task('doc', ['clean:docs'], function () {
+    return gulp.src(['gulpfile.js', 'lib/**/*.js', 'src/ts/**/*.ts', 'tests/**/*.ts'])
         .pipe(tmpl(stamp))
         .pipe(jsdoc('docs'));
 });
 
 // Generate complexity analysis.
-gulp.task('plato', ['clean:plato'], function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
-    return gulp.src(['src/js/**/*.js'])
+gulp.task('plato', ['clean:plato'], function () {
+    return gulp.src(['src/ts/**/*.ts'])
         .pipe(plato('plato', {
             'complexity' : {
                 'trycatch' : true
@@ -538,14 +495,10 @@ gulp.task('plato', ['clean:plato'], function (done) {
 
 // Generate PageSpeed Insights.
 gulp.task('psi', function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
     psi({
         'nokey'    : 'true',
         'strategy' : 'desktop',
-        'url'      : stamp.env.data.site
+        'url'      : env.data.site
     }, done);
 });
 
@@ -555,17 +508,13 @@ gulp.task('psi', function (done) {
 //                                    //
 ////////////////////////////////////////
 
-// Publish the codebase to the S3 production environment.
-gulp.task('release:production', ['jekyll'], function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
-    if (!argv.force && !prod) {
+// Publish the codebase.
+gulp.task('release', ['jekyll'], function (done) {
+    if (!argv.force && !env.base) {
         logErr('Incorrect environment for release.');
         return done();
     }
-    isBranch('master')
+    return isBranch('master')
         .then(function () {
             return;
         })
@@ -582,11 +531,7 @@ gulp.task('release:production', ['jekyll'], function (done) {
 ////////////////////////////////////////
 
 // Tests our specs.
-gulp.task('test', ['clean:coverage'], function (done) {
-    if (envErr) {
-        logErr(envErr);
-        return done();
-    }
+gulp.task('test', ['clean:coverage', 'build', 'copy'], function () {
     return gulp.src(['./fake'])
         .on('error', gutil.log)
         .pipe(karma({
@@ -602,4 +547,4 @@ gulp.task('test', ['clean:coverage'], function (done) {
 ////////////////////////////////////////
 
 // Defines a default task
-gulp.task('default', ['lint', 'test', 'plato', 'build']);
+gulp.task('default', ['lint', 'test', 'plato']);

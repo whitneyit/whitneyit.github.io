@@ -1,1 +1,3 @@
-define(["require","exports","angular"],function(e,i,n){n.module("whitneyit",[])});
+define(["require", "exports", 'angular'], function (require, exports, angular) {
+    angular.module('whitneyit', []);
+});
