@@ -4,12 +4,10 @@ module.exports = function (config) {
     'use strict';
 
     var
-        // Grab the `package.json` file.
-        pkg = require('./package.json'),
-
         // Here we define an Object that we will use for `lodash` templating.
         stamp = {
-            'pkg' : pkg
+            'env' : require('detect-environment')(),
+            'pkg' : require('./package.json')
         };
 
     // Configure `karma`.
@@ -37,11 +35,19 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         'files' : [
             {
-                'pattern'  : 'bower_components/**/*.js',
+                'pattern'  : 'assets/js/app/**/*.js',
                 'included' : false
             },
             {
-                'pattern'  : 'src/**/*.js',
+                'pattern'  : 'assets/js/app.js',
+                'included' : false
+            },
+            {
+                'pattern'  : 'assets/lib/**/*.js',
+                'included' : false
+            },
+            {
+                'pattern'  : 'assets/vendor/**/*.js',
                 'included' : false
             },
             {
@@ -49,7 +55,11 @@ module.exports = function (config) {
                 'included' : false
             },
             {
-                'pattern'  : 'tests/fixtures/karma.fixture.js',
+                'pattern'  : 'assets/js/main.config.js',
+                'included' : true
+            },
+            {
+                'pattern'  : 'tests/karma.main.js',
                 'included' : true
             }
         ],
@@ -77,8 +87,7 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         'preprocessors' : {
-            '**/*.js'     : ['lodash'],
-            'src/**/*.js' : ['coverage']
+            'assets/js/**/*.js' : ['coverage']
         },
 
         // test results reporter to use
@@ -107,8 +116,19 @@ module.exports = function (config) {
         // https://github.com/karma-runner/karma-coverage
         // configure the where we want the report to be saved
         'coverageReporter' : {
-            'dir'  : 'coverage',
-            'type' : 'html'
+            'dir'       : 'coverage',
+            'reporters' : [
+                {
+                    'type'   : 'lcov',
+                    'subdir' : 'lcov'
+                },
+                {
+                    'type' : 'html'
+                },
+                {
+                    'type' : 'text-summary'
+                }
+            ]
         }
 
     });

@@ -7,6 +7,7 @@ dist/**
 docs/**
 node_modules/**
 plato/**
+typings/**
 
 # Files
 .DS_Store
@@ -14,3 +15,4 @@ plato/**
 .env.*.yml
 .Thumbs.db
 npm-debug.log
+!.env.testing.yml
