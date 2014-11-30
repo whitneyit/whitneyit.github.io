@@ -15,4 +15,3 @@ typings/**
 .env.*.yml
 .Thumbs.db
 npm-debug.log
-!.env.testing.yml
