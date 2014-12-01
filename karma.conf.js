@@ -43,7 +43,7 @@ module.exports = function (config) {
                 'included' : false
             },
             {
-                'pattern'  : 'assets/lib/**/*.js',
+                'pattern'  : 'assets/bower/**/*.js',
                 'included' : false
             },
             {
