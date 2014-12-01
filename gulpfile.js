@@ -493,10 +493,7 @@ gulp.task('release', ['jekyll'], function (done) {
         log.err('Incorrect environment for release.');
         return done();
     }
-    return isBranch('master')
-        .then(function () {
-            return;
-        })
+    return isBranch('master', argv.force)
         .catch(function (err) {
             log.err(err);
             return err;
