@@ -507,7 +507,7 @@ gulp.task('release', ['jekyll'], function (done) {
 ////////////////////////////////////////
 
 // Tests our specs.
-gulp.task('test', ['clean:coverage', 'build', 'copy'], function () {
+gulp.task('test', ['clean:coverage'], function () {
     return gulp.src(['./fake'])
         .on('error', gutil.log)
         .pipe(karma({

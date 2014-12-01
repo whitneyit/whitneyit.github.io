@@ -21,7 +21,7 @@
   "scripts": {
     "install": "./node_modules/.bin/bower install --config.interactive=false && ./node_modules/.bin/tsd update",
     "start": "npm install && gulp default",
-    "test": "echo 'Testing is handled by gulp, please run `gulp test` instead\n' && gulp test",
+    "test": "gulp build copy && gulp test",
     "coveralls": "cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls"
   },
   "dependencies": {},
