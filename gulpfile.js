@@ -60,9 +60,12 @@ var
             log.info('Travis detected. Setting environment to "testing"');
             return 'testing';
         }
-        if (argv._[0] === 'release') {
-            log.info('Release detected. Setting environment to "production"');
-            return 'production';
+        var task = argv._[0];
+        switch (argv._[0]) {
+            case 'psi':
+            case 'release':
+                log.info('Task "' + task + '" detected. Setting environment to "production"');
+                return 'production';
         }
         return envName;
     }),
@@ -216,7 +219,7 @@ gulp.task('build:scss', ['clean:dist:css'], function () {
 // Pre-processes our image files.
 gulp.task('build:img', ['clean:dist:img'], function () {
     return gulp.src(['src/img/**/*'])
-        .pipe(gif(env.base, image()))
+        .pipe(gif(env.minify, image()))
         .pipe(chmod(755))
         .pipe(gulp.dest('dist/img'));
 });
