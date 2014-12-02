@@ -332,7 +332,7 @@ gulp.task('lint:scss', function () {
 
 // Lints our JavaScript files.
 gulp.task('lint:js', function () {
-    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js'])
+    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js', 'src/js/**/*.js'])
         .pipe(tmpl(stamp))
         .pipe(eslint())
         .pipe(eslint.format())

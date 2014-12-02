@@ -64,6 +64,7 @@
     "karma-lodash-template-preprocessor": "^0.1.2",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-requirejs": "^0.2.2",
+    "karma-typescript-preprocessor": "git://github.com/whitneyit/karma-typescript-preprocessor",
     "lodash.template": "^2.4.1",
     "psi": "0.0.3",
     "q": "^1.1.1",
