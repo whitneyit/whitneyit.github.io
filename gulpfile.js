@@ -116,54 +116,59 @@ gulp.task('clean:assets', function (done) {
     clean('assets', done);
 });
 
-// Cleans the `assets/img` directory.
-gulp.task('clean:assets:img', function (done) {
-    clean('assets/img', done);
-});
-
-// Cleans the `assets/bower` directory.
-gulp.task('clean:assets:bower', function (done) {
-    clean('assets/bower', done);
-});
-
-// Cleans the `assets/bower/angular` directory.
-gulp.task('clean:assets:bower:angular', function (done) {
-    clean('assets/bower/angular', done);
-});
-
-// Cleans the `assets/bower/jquery` directory.
-gulp.task('clean:assets:bower:jquery', function (done) {
-    clean('assets/bower/jquery', done);
-});
-
-// Cleans the `assets/bower/requirejs` directory.
-gulp.task('clean:assets:bower:requirejs', function (done) {
-    clean('assets/bower/requirejs', done);
-});
-
-// Cleans the `assets/media` directory.
-gulp.task('clean:assets:media', function (done) {
-    clean('assets/media', done);
-});
-
-// Cleans the `assets/css` directory.
-gulp.task('clean:assets:css', function (done) {
-    clean('assets/css', done);
-});
-
-// Cleans the `assets/js` directory.
-gulp.task('clean:assets:js', function (done) {
-    clean('assets/js', done);
-});
-
-// Cleans the `assets/vendor` directory.
-gulp.task('clean:assets:vendor', function (done) {
-    clean('assets/vendor', done);
-});
-
 // Cleans the `coverage` directory.
 gulp.task('clean:coverage', function (done) {
     clean('coverage', done);
+});
+
+// Cleans the `dist` directory.
+gulp.task('clean:dist', function (done) {
+    clean('dist', done);
+});
+
+// Cleans the `dist/img` directory.
+gulp.task('clean:dist:img', function (done) {
+    clean('dist/img', done);
+});
+
+// Cleans the `dist/bower` directory.
+gulp.task('clean:dist:bower', function (done) {
+    clean('dist/bower', done);
+});
+
+// Cleans the `dist/bower/angular` directory.
+gulp.task('clean:dist:bower:angular', function (done) {
+    clean('dist/bower/angular', done);
+});
+
+// Cleans the `dist/bower/jquery` directory.
+gulp.task('clean:dist:bower:jquery', function (done) {
+    clean('dist/bower/jquery', done);
+});
+
+// Cleans the `dist/bower/requirejs` directory.
+gulp.task('clean:dist:bower:requirejs', function (done) {
+    clean('dist/bower/requirejs', done);
+});
+
+// Cleans the `dist/media` directory.
+gulp.task('clean:dist:media', function (done) {
+    clean('dist/media', done);
+});
+
+// Cleans the `dist/css` directory.
+gulp.task('clean:dist:css', function (done) {
+    clean('dist/css', done);
+});
+
+// Cleans the `dist/js` directory.
+gulp.task('clean:dist:js', function (done) {
+    clean('dist/js', done);
+});
+
+// Cleans the `dist/vendor` directory.
+gulp.task('clean:dist:vendor', function (done) {
+    clean('dist/vendor', done);
 });
 
 // Cleans the `docs` directory.
@@ -193,7 +198,7 @@ gulp.task('clean:root', function (done) {
 ////////////////////////////////////////
 
 // Pre-processes our SCSS files.
-gulp.task('build:scss', ['clean:assets:css'], function () {
+gulp.task('build:scss', ['clean:dist:css'], function () {
     return gulp.src(['bower_components/normalize.css/normalize.css', 'src/scss/main.scss'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
@@ -202,22 +207,22 @@ gulp.task('build:scss', ['clean:assets:css'], function () {
         .pipe(gif(argv.minify, cssmin()))
         .pipe(chmod(755))
         .pipe(rename('whitneyit.css'))
-        .pipe(gulp.dest('assets/css'))
+        .pipe(gulp.dest('dist/css'))
         .pipe(size({
             'showFiles' : true
         }));
 });
 
 // Pre-processes our image files.
-gulp.task('build:img', ['clean:assets:img'], function () {
+gulp.task('build:img', ['clean:dist:img'], function () {
     return gulp.src(['src/img/**/*'])
         .pipe(gif(env.base, image()))
         .pipe(chmod(755))
-        .pipe(gulp.dest('assets/img'));
+        .pipe(gulp.dest('dist/img'));
 });
 
 // Pre-processes our `main.js` file.
-gulp.task('build:js:main', ['clean:assets:js'], function () {
+gulp.task('build:js:main', ['clean:dist:js'], function () {
     return gulp.src(['src/js/main.config.js', 'src/js/main.bootstrap.js'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
@@ -228,11 +233,11 @@ gulp.task('build:js:main', ['clean:assets:js'], function () {
         .pipe(gif(argv.gzip, gzip({
             'append' : false
         })))
-        .pipe(gulp.dest('assets/js'))
+        .pipe(gulp.dest('dist/js'))
         .pipe(concat('main.js'))
         .pipe(header(head, stamp))
         .pipe(footer(foot, stamp))
-        .pipe(gulp.dest('assets/js'))
+        .pipe(gulp.dest('dist/js'))
         .pipe(size({
             'showFiles' : true
         }));
@@ -252,51 +257,51 @@ gulp.task('build:ts', ['build:js:main'], function () {
         .pipe(gif(argv.gzip, gzip({
             'append' : false
         })))
-        .pipe(gulp.dest('assets/js'))
+        .pipe(gulp.dest('dist/js'))
         .pipe(size({
             'showFiles' : true
         }));
 });
 
-// Copy angular to the `assets/bower/angular` directory.
-gulp.task('copy:assets:lib:angular', ['clean:assets:bower:angular'], function () {
+// Copy angular to the `dist/bower/angular` directory.
+gulp.task('copy:dist:lib:angular', ['clean:dist:bower:angular'], function () {
     return gulp.src(['bower_components/angular/angular.min.js'])
         .pipe(chmod(755))
         .pipe(rename('angular-1.3.3.min.js'))
-        .pipe(gulp.dest('assets/bower/angular'));
+        .pipe(gulp.dest('dist/bower/angular'));
 });
 
-// Copy jquery to the `assets/bower/jquery` directory.
-gulp.task('copy:assets:lib:jquery', ['clean:assets:bower:jquery'], function () {
+// Copy jquery to the `dist/bower/jquery` directory.
+gulp.task('copy:dist:lib:jquery', ['clean:dist:bower:jquery'], function () {
     return gulp.src(['bower_components/jquery/dist/jquery.min.js'])
         .pipe(chmod(755))
         .pipe(rename('jquery-2.1.1.min.js'))
-        .pipe(gulp.dest('assets/bower/jquery'));
+        .pipe(gulp.dest('dist/bower/jquery'));
 });
 
-// Copy requirejs to the `assets/bower/requirejs` directory.
-gulp.task('copy:assets:lib:requirejs', ['clean:assets:bower:requirejs'], function () {
+// Copy requirejs to the `dist/bower/requirejs` directory.
+gulp.task('copy:dist:lib:requirejs', ['clean:dist:bower:requirejs'], function () {
     return gulp.src(['bower_components/requirejs/require.js'])
         .pipe(chmod(755))
         .pipe(uglify({
             'preserveComments' : 'some'
         }))
         .pipe(rename('require-2.1.15.min.js'))
-        .pipe(gulp.dest('assets/bower/requirejs'));
+        .pipe(gulp.dest('dist/bower/requirejs'));
 });
 
-// Copy our media to the `assets/media` directory.
-gulp.task('copy:assets:media', ['clean:assets:media'], function () {
+// Copy our media to the `dist/media` directory.
+gulp.task('copy:dist:media', ['clean:dist:media'], function () {
     return gulp.src(['src/media/**/*'])
         .pipe(chmod(755))
-        .pipe(gulp.dest('assets/media'));
+        .pipe(gulp.dest('dist/media'));
 });
 
-// Copy our media to the `assets/vendor` directory.
-gulp.task('copy:assets:vendor', ['clean:assets:vendor'], function () {
+// Copy our media to the `dist/vendor` directory.
+gulp.task('copy:dist:vendor', ['clean:dist:vendor'], function () {
     return gulp.src(['vendor/**/*'])
         .pipe(chmod(755))
-        .pipe(gulp.dest('assets/vendor'));
+        .pipe(gulp.dest('dist/vendor'));
 });
 
 // Copy our media to the `root` directory.
@@ -322,14 +327,6 @@ gulp.task('jekyll', ['copy', 'build'], function (done) {
     });
 });
 
-// Lints our CSS files.
-gulp.task('lint:scss', function () {
-    return gulp.src(['src/scss/main.scss'])
-        .pipe(tmpl(stamp))
-        .pipe(sass())
-        .pipe(csslint());
-});
-
 // Lints our JavaScript files.
 gulp.task('lint:js', function () {
     return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js', 'src/js/**/*.js'])
@@ -349,6 +346,14 @@ gulp.task('lint:json', function () {
         }));
 });
 
+// Lints our CSS files.
+gulp.task('lint:scss', function () {
+    return gulp.src(['src/scss/main.scss'])
+        .pipe(tmpl(stamp))
+        .pipe(sass())
+        .pipe(csslint());
+});
+
 ////////////////////////////////////////
 //                                    //
 //              Aliases               //
@@ -363,56 +368,56 @@ gulp.task('build', [
 ]);
 
 // Cleans the asset subdirectories.
-gulp.task('clean:assets:bower:all', [
-    'clean:assets:bower:angular',
-    'clean:assets:bower:jquery',
-    'clean:assets:bower:requirejs'
+gulp.task('clean:dist:bower:all', [
+    'clean:dist:bower:angular',
+    'clean:dist:bower:jquery',
+    'clean:dist:bower:requirejs'
 ]);
 
 // Cleans the asset subdirectories.
-gulp.task('clean:assets:all', [
-    'clean:assets:css',
-    'clean:assets:img',
-    'clean:assets:js',
-    'clean:assets:bower',
-    'clean:assets:media',
-    'clean:assets:vendor'
+gulp.task('clean:dist:all', [
+    'clean:dist:css',
+    'clean:dist:img',
+    'clean:dist:js',
+    'clean:dist:bower',
+    'clean:dist:media',
+    'clean:dist:vendor'
 ]);
 
 // Cleans all other directories.
 gulp.task('clean', [
-    'clean:assets',
     'clean:coverage',
+    'clean:dist',
     'clean:docs',
     'clean:plato',
     'clean:root'
 ]);
 
 // Copies the lib subdirectory
-gulp.task('copy:assets:lib', [
-    'copy:assets:lib:angular',
-    'copy:assets:lib:jquery',
-    'copy:assets:lib:requirejs'
+gulp.task('copy:dist:lib', [
+    'copy:dist:lib:angular',
+    'copy:dist:lib:jquery',
+    'copy:dist:lib:requirejs'
 ]);
 
-// Copies the assets directory.
-gulp.task('copy:assets', [
-    'copy:assets:lib',
-    'copy:assets:media',
-    'copy:assets:vendor'
+// Copies the dist directory.
+gulp.task('copy:dist', [
+    'copy:dist:lib',
+    'copy:dist:media',
+    'copy:dist:vendor'
 ]);
 
-// Copies all of the assets.
+// Copies all of the dist.
 gulp.task('copy', [
-    'copy:assets',
+    'copy:dist',
     'copy:root'
 ]);
 
 // Lints our codebase.
 gulp.task('lint', [
-    'lint:scss',
     'lint:js',
-    'lint:json'
+    'lint:json',
+    'lint:scss'
 ]);
 
 ////////////////////////////////////////
