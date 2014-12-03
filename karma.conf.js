@@ -39,10 +39,6 @@ module.exports = function (config) {
                 'included' : false
             },
             {
-                'pattern'  : 'lib/**/*.js',
-                'included' : false
-            },
-            {
                 'pattern'  : 'vendor/**/*.js',
                 'included' : false
             },
@@ -59,7 +55,7 @@ module.exports = function (config) {
                 'included' : false
             },
             {
-                'pattern'  : 'tests/specs/**/*.spec.js',
+                'pattern'  : 'tests/specs/**/*.spec.ts',
                 'included' : false
             },
             {
@@ -67,7 +63,7 @@ module.exports = function (config) {
                 'included' : true
             },
             {
-                'pattern'  : 'tests/karma.main.js',
+                'pattern'  : 'tests/karma.main.ts',
                 'included' : true
             }
         ],
@@ -96,8 +92,8 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         'preprocessors' : {
-            'src/js/**/*.js' : ['lodash', 'coverage'],
-            'src/ts/**/*.ts' : ['lodash', 'typescript', 'coverage']
+            'src/ts/**/*.ts' : ['lodash', 'typescript', 'coverage'],
+            'tests/**/*.ts'  : ['lodash', 'typescript']
         },
 
         // test results reporter to use
