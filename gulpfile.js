@@ -252,15 +252,15 @@ gulp.task('build:ts:main', ['clean:dist:js'], function () {
         .pipe(ts(tsProject))
         .js
         .pipe(chmod(755))
+        .pipe(concat('main.js'))
+        .pipe(header(head, stamp))
+        .pipe(footer(foot, stamp))
         .pipe(gif(argv.minify, uglify({
             'preserveComments' : 'some'
         })))
         .pipe(gif(argv.gzip, gzip({
             'append' : false
         })))
-        .pipe(concat('main.js'))
-        .pipe(header(head, stamp))
-        .pipe(footer(foot, stamp))
         .pipe(gulp.dest('dist/js'))
         .pipe(size({
             'showFiles' : true
