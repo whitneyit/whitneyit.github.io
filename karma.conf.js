@@ -35,31 +35,35 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         'files' : [
             {
-                'pattern'  : 'assets/js/app/**/*.js',
+                'pattern'  : 'bower_components/**/*.js',
                 'included' : false
             },
             {
-                'pattern'  : 'assets/js/app.js',
+                'pattern'  : 'vendor/**/*.js',
                 'included' : false
             },
             {
-                'pattern'  : 'assets/lib/**/*.js',
+                'pattern'  : 'typings/**/*.d.ts',
                 'included' : false
             },
             {
-                'pattern'  : 'assets/vendor/**/*.js',
+                'pattern'  : 'src/ts/app/**/*.ts',
                 'included' : false
             },
             {
-                'pattern'  : 'tests/specs/**/*.spec.js',
+                'pattern'  : 'src/ts/app.ts',
                 'included' : false
             },
             {
-                'pattern'  : 'assets/js/main.config.js',
+                'pattern'  : 'tests/specs/**/*.spec.ts',
+                'included' : false
+            },
+            {
+                'pattern'  : 'src/ts/main.config.ts',
                 'included' : true
             },
             {
-                'pattern'  : 'tests/karma.main.js',
+                'pattern'  : 'tests/karma.main.ts',
                 'included' : true
             }
         ],
@@ -78,7 +82,8 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-lodash-template-preprocessor',
             'karma-phantomjs-launcher',
-            'karma-requirejs'
+            'karma-requirejs',
+            'karma-typescript-preprocessor'
         ],
 
         // web server port
@@ -87,7 +92,8 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         'preprocessors' : {
-            'assets/js/**/*.js' : ['coverage']
+            'src/ts/**/*.ts' : ['lodash', 'typescript', 'coverage'],
+            'tests/**/*.ts'  : ['lodash', 'typescript']
         },
 
         // test results reporter to use
@@ -110,6 +116,23 @@ module.exports = function (config) {
         // the `stamp` Object is what variables will be exposed to the templates
         'lodashPreprocessor' : {
             'data' : stamp
+        },
+
+        // typescript preprocessor
+        // https://github.com/sergeyt/karma-typescript-preprocessor
+        // options to be passed to the typescript compiler
+        'typescriptPreprocessor' : {
+            'options' : {
+                'module'         : 'amd',
+                'noImplicitAny'  : true,
+                'noResolve'      : false,
+                'removeComments' : true,
+                'sourceMap'      : false,
+                'target'         : 'es5'
+            },
+            'transformPath' : function (path) {
+                return path.replace(/\.ts$/, '.js');
+            }
         },
 
         // coverage reporter

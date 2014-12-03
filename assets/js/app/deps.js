@@ -1,4 +1,1 @@
-define(["require", "exports"], function (require, exports) {
-    var appDeps = [];
-    return appDeps;
-});
+define(["require","exports"],function(){var e=[];return e});

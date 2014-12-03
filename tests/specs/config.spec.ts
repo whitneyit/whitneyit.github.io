@@ -1,3 +1,18 @@
+/// <reference path="../../typings/jasmine/jasmine.d.ts" />
+/// <reference path="../../typings/requirejs/require.d.ts" />
+
+interface jasmine13VersionInterface {
+    major :string;
+    minor :string;
+    build :string;
+    revision :string;
+}
+
+declare module jasmine {
+    var version :string;
+    var version_ :jasmine13VersionInterface;
+}
+
 'use strict';
 
 /**
@@ -18,7 +33,7 @@
  *
  * @return {Void}
  */
-requirejs.onError = function onError (err) {
+requirejs.onError = (err) => {
 
     // Add the module in which the `err` was found to the `message`.
     if ('requireModules' in err) {
@@ -39,7 +54,7 @@ requirejs.onError = function onError (err) {
  * @description
  * With our setup now complete we can start writing our tests.
  */
-define([], function () {
+define([], () => {
 /* eslint brace-style:0 no-console:0 */
 
     var
@@ -79,13 +94,13 @@ define([], function () {
     console.log('Testing using jasmine version: ' + version);
 
     // Start writing our tests.
-    describe('our app', function () {
+    describe('our app', () => {
 
         // Although this test looks stupid, it actually isn't. It is perfect for
         // proving that we have all the required frameworks, packages, and gulp
         // tasks configured correctly. It proves that we can run tests and that
         // our custom matchers are configured.
-        it('should have tests', function () {
+        it('should have tests', () => {
             expect(true).toBe(true);
         });
 
