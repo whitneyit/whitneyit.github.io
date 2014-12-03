@@ -51,7 +51,11 @@ module.exports = function (config) {
                 'included' : false
             },
             {
-                'pattern'  : 'src/ts/**/*.ts',
+                'pattern'  : 'src/ts/app/**/*.ts',
+                'included' : false
+            },
+            {
+                'pattern'  : 'src/ts/app.ts',
                 'included' : false
             },
             {
@@ -59,7 +63,7 @@ module.exports = function (config) {
                 'included' : false
             },
             {
-                'pattern'  : 'src/js/main.config.js',
+                'pattern'  : 'src/ts/main.config.ts',
                 'included' : true
             },
             {

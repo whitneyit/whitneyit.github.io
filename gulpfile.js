@@ -224,31 +224,9 @@ gulp.task('build:img', ['clean:dist:img'], function () {
         .pipe(gulp.dest('dist/img'));
 });
 
-// Pre-processes our `main.js` file.
-gulp.task('build:js:main', ['clean:dist:js'], function () {
-    return gulp.src(['src/js/main.config.js', 'src/js/main.bootstrap.js'])
-        .on('error', gutil.log)
-        .pipe(tmpl(stamp))
-        .pipe(chmod(755))
-        .pipe(gif(argv.minify, uglify({
-            'preserveComments' : 'some'
-        })))
-        .pipe(gif(argv.gzip, gzip({
-            'append' : false
-        })))
-        .pipe(gulp.dest('dist/js'))
-        .pipe(concat('main.js'))
-        .pipe(header(head, stamp))
-        .pipe(footer(foot, stamp))
-        .pipe(gulp.dest('dist/js'))
-        .pipe(size({
-            'showFiles' : true
-        }));
-});
-
-// Pre-processes our TypeScript files.
-gulp.task('build:ts', ['build:js:main'], function () {
-    return gulp.src(['src/ts/**/*.ts', 'typings/**/*.d.ts'])
+// Pre-processes our `app.js` file.
+gulp.task('build:ts:app', ['build:ts:main'], function () {
+    return gulp.src(['src/ts/app.ts'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
         .pipe(ts(tsProject))
@@ -264,6 +242,55 @@ gulp.task('build:ts', ['build:js:main'], function () {
         .pipe(size({
             'showFiles' : true
         }));
+});
+
+// Pre-processes our `main.js` file.
+gulp.task('build:ts:main', ['clean:dist:js'], function () {
+    return gulp.src(['src/ts/main.config.ts', 'src/ts/main.bootstrap.ts'])
+        .on('error', gutil.log)
+        .pipe(tmpl(stamp))
+        .pipe(ts(tsProject))
+        .js
+        .pipe(chmod(755))
+        .pipe(gif(argv.minify, uglify({
+            'preserveComments' : 'some'
+        })))
+        .pipe(gif(argv.gzip, gzip({
+            'append' : false
+        })))
+        .pipe(concat('main.js'))
+        .pipe(header(head, stamp))
+        .pipe(footer(foot, stamp))
+        .pipe(gulp.dest('dist/js'))
+        .pipe(size({
+            'showFiles' : true
+        }));
+});
+
+// Pre-processes our TypeScript files.
+gulp.task('build:ts', ['build:ts:app'], function () {
+    return gulp.src(['src/ts/app/**/*.ts', 'typings/**/*.d.ts'])
+        .on('error', gutil.log)
+        .pipe(tmpl(stamp))
+        .pipe(ts(tsProject))
+        .js
+        .pipe(chmod(755))
+        .pipe(gif(argv.minify, uglify({
+            'preserveComments' : 'some'
+        })))
+        .pipe(gif(argv.gzip, gzip({
+            'append' : false
+        })))
+        .pipe(gulp.dest('dist/js/app'))
+        .pipe(size({
+            'showFiles' : true
+        }));
+});
+
+// Copy `dist` to the `assets` directory.
+gulp.task('copy:assets', function () {
+    return gulp.src(['dist/**/*'])
+        .pipe(gulp.dest('assets'));
 });
 
 // Copy angular to the `dist/bower/angular` directory.
@@ -323,16 +350,9 @@ gulp.task('copy:root', ['clean:root'], function () {
         .pipe(gulp.dest('.'));
 });
 
-// Pre-processes our Jekyll files.
-gulp.task('jekyll', ['copy', 'build'], function (done) {
-    spawn('jekyll', ['build'], {'stdio' : 'inherit'}).on('close', function () {
-        done();
-    });
-});
-
 // Lints our JavaScript files.
 gulp.task('lint:js', function () {
-    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js', 'src/js/**/*.js'])
+    return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js'])
         .pipe(tmpl(stamp))
         .pipe(eslint())
         .pipe(eslint.format())
@@ -494,6 +514,13 @@ gulp.task('psi', function (done) {
 //              Releases              //
 //                                    //
 ////////////////////////////////////////
+
+// Pre-processes our Jekyll files.
+gulp.task('jekyll', ['copy:assets'], function (done) {
+    spawn('jekyll', ['build'], {'stdio' : 'inherit'}).on('close', function () {
+        done();
+    });
+});
 
 // Publish the codebase.
 gulp.task('release', ['jekyll'], function (done) {

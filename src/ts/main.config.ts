@@ -1,3 +1,9 @@
+/// <reference path="../../typings/requirejs/require.d.ts" />
+
+interface Window {
+    rjsconfig :RequireConfig;
+}
+
 window.rjsconfig = {
     'baseUrl' : '.',
     'paths' : {
@@ -24,12 +30,8 @@ window.rjsconfig = {
             'assets/img',
             'src/img'
         ],
-        'js' : [
-            'assets/js',
-            'src/js'
-        ],
         'ts' : [
-            'assets/ts',
+            'assets/js',
             'src/ts'
         ]
     },

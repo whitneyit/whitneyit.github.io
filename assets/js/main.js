@@ -1,51 +1,46 @@
 (function () { 'use strict';
 
 window.rjsconfig = {
-    'baseUrl' : '.',
-    'paths' : {
-        'angular' : [
+    'baseUrl': '.',
+    'paths': {
+        'angular': [
             '//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min',
             'assets/bower/angular/angular-1.3.3.min',
             'bower_components/angular/angular.min'
         ],
-        'jquery' : [
+        'jquery': [
             '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
             'assets/bower/jquery/jquery-2.1.1.min',
             'bower_components/jquery/dist/jquery.min'
         ],
-        'ga' : [
+        'ga': [
             '//google-analytics.com/ga',
             'assets/vendor/ga/ga',
             'vendor/ga/ga'
         ],
-        'css' : [
+        'css': [
             'assets/css',
             'src/css'
         ],
-        'img' : [
+        'img': [
             'assets/img',
             'src/img'
         ],
-        'js' : [
+        'ts': [
             'assets/js',
-            'src/js'
-        ],
-        'ts' : [
-            'assets/ts',
             'src/ts'
         ]
     },
-    'shim' : {
-        'angular' : {
-            'deps'    : ['jquery'],
-            'exports' : 'angular'
+    'shim': {
+        'angular': {
+            'deps': ['jquery'],
+            'exports': 'angular'
         }
     }
 };
 
-requirejs.config(window.rjsconfig);
-
-requirejs(['angular', 'js/app/name',  'js/app', 'ga'], function (angular, appName) {
+window.requirejs.config(window.rjsconfig);
+window.requirejs(['angular', 'ts/app/name', 'ts/app', 'ga'], function (angular, appName) {
     angular.element(document).ready(function () {
         angular.bootstrap(document, [appName]);
     });
