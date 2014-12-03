@@ -1,34 +1,5 @@
-requirejs.config({
-    'baseUrl': '.',
-    'deps': [
-        'assets/js/bootstrap',
-        'ga'
-    ],
-    'paths': {
-        'angular': [
-            '//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min',
-            'assets/lib/angular/angular-1.3.3.min'
-        ],
-        'jquery': [
-            '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-            'assets/lib/jquery/jquery-2.1.1.min'
-        ],
-        'ga': [
-            '//google-analytics.com/ga',
-            'assets/vendor/ga/ga'
-        ]
-    },
-    'shim': {
-        'angular': {
-            'deps': ['jquery'],
-            'exports': 'angular'
-        },
-        'ga': {
-            'init': function () {
-                var _gaq = [];
-                _gaq.push(['_setAccount', 'UA-17120667-1']);
-                _gaq.push(['_trackPageview']);
-            }
-        }
-    }
-});
+(function () { 'use strict';
+
+window.rjsconfig={baseUrl:".",paths:{angular:["//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min","assets/bower/angular/angular-1.3.3.min","bower_components/angular/angular.min"],jquery:["//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min","assets/bower/jquery/jquery-2.1.1.min","bower_components/jquery/dist/jquery.min"],ga:["//google-analytics.com/ga","assets/vendor/ga/ga","vendor/ga/ga"],css:["assets/css","src/css"],img:["assets/img","src/img"],ts:["assets/js","src/ts"]},shim:{angular:{deps:["jquery"],exports:"angular"}}};
+window.requirejs.config(window.rjsconfig),window.requirejs(["angular","ts/app/name","ts/app","ga"],function(n,e){n.element(document).ready(function(){n.bootstrap(document,[e])})});
+})();

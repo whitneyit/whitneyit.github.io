@@ -1,6 +1,7 @@
 " Directories
 set wildignore+=*/.git/**
 set wildignore+=*/.sass-cache/**
+set wildignore+=*/.tsc/**
 set wildignore+=*/_site/**
 set wildignore+=*/assets/**
 set wildignore+=*/bower_components/**
@@ -17,4 +18,4 @@ set wildignore+=*.Thumbs.db
 set wildignore+=*.npm-debug.log
 
 " Nerdtree specific ignore
-let NERDTreeIgnore += ['^.git$', '^.sass-cache$', '^_site$', '^assets$', '^bower_components$', '^coverage$', '^dist$', '^docs$', '^node_modules$', '^plato$', '^typings$', '^npm-debug.log$']
+let NERDTreeIgnore += ['^.git$', '^.sass-cache$', '^.tsc$', '^_site$', '^assets$', '^bower_components$', '^coverage$', '^dist$', '^docs$', '^node_modules$', '^plato$', '^typings$', '^npm-debug.log$']

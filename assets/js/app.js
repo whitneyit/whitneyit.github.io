@@ -1,4 +1,1 @@
-define(["require", "exports", 'angular', './app/deps', './app/name', "ga"], function (require, exports, angular, appDeps, appName) {
-    var app = angular.module(appName, appDeps);
-    return app;
-});
+define(["require","exports","angular","./app/deps","./app/name","ga"],function(e,a,r,n,p){var u=r.module(p,n);return u});

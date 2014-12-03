@@ -1,4 +1,1 @@
-define(["require", "exports"], function (require, exports) {
-    var appName = 'whitneyit';
-    return appName;
-});
+define(["require","exports"],function(){var e="whitneyit";return e});
