@@ -516,7 +516,7 @@ gulp.task('psi', function (done) {
 ////////////////////////////////////////
 
 // Pre-processes our Jekyll files.
-gulp.task('jekyll', ['copy:assets'], function (done) {
+gulp.task('jekyll', function (done) {
     spawn('jekyll', ['build'], {'stdio' : 'inherit'}).on('close', function () {
         done();
     });
