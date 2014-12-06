@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en-AU" class="page page--{{ page.class }}">
+<!--[if lt IE 7]>      <html lang="en-AU" class="no-js ie6 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en-AU" class="no-js ie7 lt-ie9 lt-ie8">        <![endif]-->
+<!--[if IE 8]>         <html lang="en-AU" class="no-js ie8 lt-ie9">               <![endif]-->
+<!--[if IE 9]>         <html lang="en-AU" class="no-js ie9">                      <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en-AU" class="no-js">                      <!--<![endif]-->
 <head>
 {% include head.html %}
 </head>
-<body>
+<body class="page page--{{ page.class }}">
 {{ content }}
 {% include foot.html %}
 </body>
