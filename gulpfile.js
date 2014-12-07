@@ -513,6 +513,20 @@ gulp.task('psi', function (done) {
 
 ////////////////////////////////////////
 //                                    //
+//              Watchers              //
+//                                    //
+////////////////////////////////////////
+
+// Watch our files for changes
+gulp.task('watch', function () {
+    gulp.watch(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js'], ['lint:js']);
+    gulp.watch(['.bowerrc', 'bower.json', 'package.json'],      ['lint:json']);
+    gulp.watch(['src/scss/**/*.scss'],                          ['build:scss']);
+    gulp.watch(['src/ts/**/*.ts'],                              ['build:ts']);
+});
+
+////////////////////////////////////////
+//                                    //
 //              Releases              //
 //                                    //
 ////////////////////////////////////////
