@@ -206,7 +206,9 @@ gulp.task('build:scss', ['clean:dist:css'], function () {
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
         .pipe(concat('whitneyit.css'))
-        .pipe(sass())
+        .pipe(sass({
+            'includePaths' : ['src/scss']
+        }))
         .pipe(gif(argv.minify, cssmin()))
         .pipe(chmod(755))
         .pipe(rename('whitneyit.css'))
@@ -219,7 +221,7 @@ gulp.task('build:scss', ['clean:dist:css'], function () {
 // Pre-processes our image files.
 gulp.task('build:img', ['clean:dist:img'], function () {
     return gulp.src(['src/img/**/*'])
-        .pipe(gif(env.minify, image()))
+        .pipe(gif(argv.minify, image()))
         .pipe(chmod(755))
         .pipe(gulp.dest('dist/img'));
 });
@@ -327,14 +329,14 @@ gulp.task('copy:dist:media', ['clean:dist:media'], function () {
         .pipe(gulp.dest('dist/media'));
 });
 
-// Copy our media to the `dist/vendor` directory.
+// Copy the vendor files to the `dist/vendor` directory.
 gulp.task('copy:dist:vendor', ['clean:dist:vendor'], function () {
     return gulp.src(['vendor/**/*'])
         .pipe(chmod(755))
         .pipe(gulp.dest('dist/vendor'));
 });
 
-// Copy our media to the `root` directory.
+// Copy our base files to the `root` directory.
 gulp.task('copy:root', ['clean:root'], function () {
     var filter = gfilter(['*', '!favicon.ico']);
     return gulp.src([
