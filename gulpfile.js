@@ -196,11 +196,45 @@ gulp.task('clean:root', function (done) {
     ], 'root', done);
 });
 
+// Cleans the asset subdirectories.
+gulp.task('clean:dist:bower:all', [
+    'clean:dist:bower:angular',
+    'clean:dist:bower:jquery',
+    'clean:dist:bower:requirejs'
+]);
+
+// Cleans the asset subdirectories.
+gulp.task('clean:dist:all', [
+    'clean:dist:css',
+    'clean:dist:img',
+    'clean:dist:js',
+    'clean:dist:bower',
+    'clean:dist:media',
+    'clean:dist:vendor'
+]);
+
+// Cleans all other directories.
+gulp.task('clean', [
+    'clean:coverage',
+    'clean:dist',
+    'clean:docs',
+    'clean:plato',
+    'clean:root'
+]);
+
 ////////////////////////////////////////
 //                                    //
-//              Subtasks              //
+//               Builds               //
 //                                    //
 ////////////////////////////////////////
+
+// Pre-processes our image files.
+gulp.task('build:img', ['clean:dist:img'], function () {
+    return gulp.src(['src/img/**/*'])
+        .pipe(gif(argv.minify, image()))
+        .pipe(chmod(755))
+        .pipe(gulp.dest('dist/img'));
+});
 
 // Pre-processes our SCSS files.
 gulp.task('build:scss', ['clean:dist:css'], function () {
@@ -239,14 +273,6 @@ gulp.task('build:scss', ['clean:dist:css'], function () {
         .pipe(size({
             'showFiles' : true
         }));
-});
-
-// Pre-processes our image files.
-gulp.task('build:img', ['clean:dist:img'], function () {
-    return gulp.src(['src/img/**/*'])
-        .pipe(gif(argv.minify, image()))
-        .pipe(chmod(755))
-        .pipe(gulp.dest('dist/img'));
 });
 
 // Pre-processes our `app.js` file.
@@ -313,6 +339,19 @@ gulp.task('build:ts', ['build:ts:app'], function () {
         }));
 });
 
+// Build our codebase.
+gulp.task('build', [
+    'build:img',
+    'build:scss',
+    'build:ts'
+]);
+
+////////////////////////////////////////
+//                                    //
+//               Copies               //
+//                                    //
+////////////////////////////////////////
+
 // Copy `dist` to the `assets` directory.
 gulp.task('copy:assets', function () {
     return gulp.src(['dist/**/*'])
@@ -376,6 +415,32 @@ gulp.task('copy:root', ['clean:root'], function () {
         .pipe(gulp.dest('.'));
 });
 
+// Copies the lib subdirectory
+gulp.task('copy:dist:lib', [
+    'copy:dist:lib:angular',
+    'copy:dist:lib:jquery',
+    'copy:dist:lib:requirejs'
+]);
+
+// Copies the dist directory.
+gulp.task('copy:dist', [
+    'copy:dist:lib',
+    'copy:dist:media',
+    'copy:dist:vendor'
+]);
+
+// Copies all of the dist.
+gulp.task('copy', [
+    'copy:dist',
+    'copy:root'
+]);
+
+////////////////////////////////////////
+//                                    //
+//               Lints                //
+//                                    //
+////////////////////////////////////////
+
 // Lints our JavaScript files.
 gulp.task('lint:js', function () {
     return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js'])
@@ -402,65 +467,6 @@ gulp.task('lint:scss', function () {
         .pipe(sass())
         .pipe(csslint());
 });
-
-////////////////////////////////////////
-//                                    //
-//              Aliases               //
-//                                    //
-////////////////////////////////////////
-
-// Build our codebase.
-gulp.task('build', [
-    'build:img',
-    'build:scss',
-    'build:ts'
-]);
-
-// Cleans the asset subdirectories.
-gulp.task('clean:dist:bower:all', [
-    'clean:dist:bower:angular',
-    'clean:dist:bower:jquery',
-    'clean:dist:bower:requirejs'
-]);
-
-// Cleans the asset subdirectories.
-gulp.task('clean:dist:all', [
-    'clean:dist:css',
-    'clean:dist:img',
-    'clean:dist:js',
-    'clean:dist:bower',
-    'clean:dist:media',
-    'clean:dist:vendor'
-]);
-
-// Cleans all other directories.
-gulp.task('clean', [
-    'clean:coverage',
-    'clean:dist',
-    'clean:docs',
-    'clean:plato',
-    'clean:root'
-]);
-
-// Copies the lib subdirectory
-gulp.task('copy:dist:lib', [
-    'copy:dist:lib:angular',
-    'copy:dist:lib:jquery',
-    'copy:dist:lib:requirejs'
-]);
-
-// Copies the dist directory.
-gulp.task('copy:dist', [
-    'copy:dist:lib',
-    'copy:dist:media',
-    'copy:dist:vendor'
-]);
-
-// Copies all of the dist.
-gulp.task('copy', [
-    'copy:dist',
-    'copy:root'
-]);
 
 // Lints our codebase.
 gulp.task('lint', [
@@ -581,8 +587,8 @@ gulp.task('release', ['jekyll'], function (done) {
 //                                    //
 ////////////////////////////////////////
 
-// Tests our specs.
-gulp.task('test', ['clean:coverage'], function () {
+// Tests our TypeScript files.
+gulp.task('test:ts', ['clean:coverage'], function () {
     return gulp.src(['./fake'])
         .on('error', gutil.log)
         .pipe(karma({
@@ -590,6 +596,11 @@ gulp.task('test', ['clean:coverage'], function () {
             'action'     : argv.debug ? 'watch' : 'run'
         }));
 });
+
+// Run all of our tests.
+gulp.task('test', [
+    'test:ts'
+]);
 
 ////////////////////////////////////////
 //                                    //
