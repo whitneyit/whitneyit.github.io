@@ -39,6 +39,7 @@ var
     jsdoc      = require('gulp-jsdoc'),
     jsonlint   = require('gulp-jsonlint'),
     karma      = require('gulp-karma'),
+    order      = require('gulp-order'),
     plato      = require('gulp-plato'),
     rename     = require('gulp-rename'),
     sass       = require('gulp-sass'),
@@ -71,8 +72,9 @@ var
     }),
 
     // Grab our "wrapping" files to be used by `gulp-header` and `gulp-footer`.
-    head = fs.readFileSync('build/include/head.js'),
-    foot = fs.readFileSync('build/include/foot.js'),
+    banner = fs.readFileSync('build/include/banner.txt'),
+    head   = fs.readFileSync('build/include/head.js'),
+    foot   = fs.readFileSync('build/include/foot.js'),
 
     // The port to be used when serving directories
     port = 3333,
@@ -202,16 +204,37 @@ gulp.task('clean:root', function (done) {
 
 // Pre-processes our SCSS files.
 gulp.task('build:scss', ['clean:dist:css'], function () {
+    var
+        f1 = gfilter(['**/normalize.css']),
+        f2 = gfilter(['**/normalize.css']),
+        f3 = gfilter(['*', '!**/normalize.css']);
     return gulp.src(['bower_components/normalize.css/normalize.css', 'src/scss/main.scss'])
         .on('error', gutil.log)
         .pipe(tmpl(stamp))
-        .pipe(concat('whitneyit.css'))
-        .pipe(sass({
-            'includePaths' : ['src/scss']
-        }))
-        .pipe(gif(argv.minify, cssmin()))
         .pipe(chmod(755))
-        .pipe(rename('whitneyit.css'))
+        .pipe(f1)
+        .pipe(cssmin({
+            'keepSpecialComments' : 0
+        }))
+        .pipe(f1.restore())
+        .pipe(sass({
+            'includePaths' : ['src/scss'],
+            'outputStyle'  : 'nested'
+        }))
+        .pipe(gif(argv.minify, cssmin({
+            'keepSpecialComments' : 1
+        })))
+        .pipe(f2)
+        .pipe(header('/*!\n * normalize.css v3.0.2 | MIT License | git.io/normalize\n */\n'))
+        .pipe(f2.restore())
+        .pipe(f3)
+        .pipe(header((argv.minify ? '\n' : '') + banner, stamp))
+        .pipe(f3.restore())
+        .pipe(order([
+            '**/normalize.css',
+            '*'
+        ]))
+        .pipe(concat('whitneyit.css'))
         .pipe(gulp.dest('dist/css'))
         .pipe(size({
             'showFiles' : true
@@ -256,6 +279,7 @@ gulp.task('build:ts:main', ['clean:dist:js'], function () {
         .pipe(chmod(755))
         .pipe(concat('main.js'))
         .pipe(header(head, stamp))
+        .pipe(header(banner, stamp))
         .pipe(footer(foot, stamp))
         .pipe(gif(argv.minify, uglify({
             'preserveComments' : 'some'

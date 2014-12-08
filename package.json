@@ -8,7 +8,7 @@
     "url": "git://github.com:whitneyit/whitneyit.github.io.git"
   },
   "private": true,
-  "licenses": "MIT",
+  "license": "MIT",
   "main": "dist/whitneyit.js",
   "keywords": [
     "whitneyit"
@@ -48,6 +48,7 @@
     "gulp-jsdoc": "^0.1.4",
     "gulp-jsonlint": "^1.0.1",
     "gulp-karma": "0.0.4",
+    "gulp-order": "^1.1.1",
     "gulp-plato": "^1.0.1",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^0.7.1",

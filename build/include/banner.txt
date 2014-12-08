@@ -1,0 +1,3 @@
+/*!
+ * Whitney IT Pty Ltd v<%= pkg.version %> | <%= pkg.license %> License | whitney.io
+ */
