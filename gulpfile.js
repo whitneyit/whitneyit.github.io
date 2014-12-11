@@ -2,7 +2,9 @@
 
 var
     // Grab any system pacakges.
+    extend     = require('util')._extend,
     fs         = require('fs'),
+    path       = require('path'),
     spawn      = require('child_process').spawn,
 
     // Grab the `package.json` file.
@@ -28,6 +30,7 @@ var
     concat     = require('gulp-concat'),
     csslint    = require('gulp-csslint'),
     cssmin     = require('gulp-cssmin'),
+    data       = require('gulp-data'),
     eslint     = require('gulp-eslint'),
     gif        = require('gulp-if'),
     gfilter    = require('gulp-filter'),
@@ -55,6 +58,18 @@ var
     // Define our cli argument aliases.
     argv = yargs.alias(args).argv,
 
+    // Add data gulp.src's vinyl Objects.
+    dataFn = function (dataObj) {
+        return function (vinyl) {
+            return extend(dataObj, {
+                'file' : {
+                    'name' : path.basename(vinyl.path),
+                    'dir'  : path.normalize(path.dirname(vinyl.path).substr(vinyl.cwd.length + 1) + '/')
+                }
+            });
+        };
+    },
+
     // Determine the environment and grab the `envData`.
     env = de(function (envName) {
         if (fs.existsSync('/home/travis')) {
@@ -81,8 +96,9 @@ var
 
     // Here we stub out an Object to use in `lodash` templating.
     stamp = {
-        'env' : env,
-        'pkg' : pkg
+        'env'  : env,
+        'file' : {},
+        'pkg'  : pkg
     },
 
     // Configure the `gulp-typescript` plugin.
@@ -244,7 +260,8 @@ gulp.task('build:scss', ['clean:dist:css'], function () {
         f3 = gfilter(['*', '!**/normalize.css']);
     return gulp.src(['bower_components/normalize.css/normalize.css', 'src/scss/main.scss'])
         .on('error', gutil.log)
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(chmod(755))
         .pipe(f1)
         .pipe(cssmin({
@@ -279,7 +296,8 @@ gulp.task('build:scss', ['clean:dist:css'], function () {
 gulp.task('build:ts:app', ['build:ts:main'], function () {
     return gulp.src(['src/ts/app.ts'])
         .on('error', gutil.log)
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(ts(tsProject))
         .js
         .pipe(chmod(755))
@@ -299,7 +317,8 @@ gulp.task('build:ts:app', ['build:ts:main'], function () {
 gulp.task('build:ts:main', ['clean:dist:js'], function () {
     return gulp.src(['src/ts/main.config.ts', 'src/ts/main.bootstrap.ts'])
         .on('error', gutil.log)
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(ts(tsProject))
         .js
         .pipe(chmod(755))
@@ -323,7 +342,8 @@ gulp.task('build:ts:main', ['clean:dist:js'], function () {
 gulp.task('build:ts', ['build:ts:app'], function () {
     return gulp.src(['src/ts/app/**/*.ts', 'typings/**/*.d.ts'])
         .on('error', gutil.log)
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(ts(tsProject))
         .js
         .pipe(chmod(755))
@@ -409,7 +429,8 @@ gulp.task('copy:root', ['clean:root'], function () {
             'src/robots.txt'
         ])
         .pipe(filter)
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(filter.restore())
         .pipe(chmod(755))
         .pipe(gulp.dest('.'));
@@ -444,7 +465,8 @@ gulp.task('copy', [
 // Lints our JavaScript files.
 gulp.task('lint:js', function () {
     return gulp.src(['gulpfile.js', 'karma.conf.js', 'lib/**/*.js'])
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(jscs());
@@ -453,7 +475,8 @@ gulp.task('lint:js', function () {
 // Lints our JSON files.
 gulp.task('lint:json', function () {
     return gulp.src(['.bowerrc', 'bower.json', 'package.json'])
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(jsonlint())
         .pipe(jsonlint.reporter(function (file) {
             log.err('File "' + file.path + '" is not valid JSON');
@@ -463,7 +486,8 @@ gulp.task('lint:json', function () {
 // Lints our CSS files.
 gulp.task('lint:scss', function () {
     return gulp.src(['src/scss/main.scss'])
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(sass())
         .pipe(csslint());
 });
@@ -518,7 +542,8 @@ gulp.task('serve:site', serve({
 // Generates our docs using JSDoc.
 gulp.task('doc', ['clean:docs'], function () {
     return gulp.src(['gulpfile.js', 'lib/**/*.js', 'src/ts/**/*.ts', 'tests/**/*.ts'])
-        .pipe(tmpl(stamp))
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
         .pipe(jsdoc('docs'));
 });
 
