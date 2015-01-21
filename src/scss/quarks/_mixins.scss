@@ -1,0 +1,17 @@
+// @description
+// Create a fully formed type style (sizing and vertical rhythm) by passing in a
+// single value, e.g.:
+//
+// @example
+// ```scss
+// `@include font-size(10px);`
+// ```
+//
+// Thanks to @redclov3r for the `line-height` Sass:
+// twitter.com/redclov3r/status/250301539321798657
+@mixin font-size($font-size, $line-height:true){
+    font-size: ($font-size / $root-font-size) * 1em;
+    @if ($line-height == true) {
+        line-height: ceil($font-size / $root-line-height) * ($root-line-height / $font-size);
+    }
+}

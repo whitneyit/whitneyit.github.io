@@ -1,5 +1,5 @@
-/// <reference path="../../typings/jasmine/jasmine.d.ts" />
-/// <reference path="../../typings/requirejs/require.d.ts" />
+/// <reference path="../../../../typings/jasmine/jasmine.d.ts" />
+/// <reference path="../../../../typings/requirejs/require.d.ts" />
 
 interface jasmine13VersionInterface {
     major :string;

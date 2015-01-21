@@ -1,0 +1,237 @@
+// ========================================================================== //
+//     $BREAKPOINTS                                                           //
+// ========================================================================== //
+
+if ($USE_WIDTHS == true) {
+
+    %width--01-01 { width:   calc-percent(01,01); }
+
+    %width--01-02 { width:   calc-percent(01,02); }
+    %width--02-02 { @extend       %width--01-01;  }
+
+    %width--01-03 { width:   calc-percent(01,03); }
+    %width--02-03 { width:   calc-percent(02,03); }
+    %width--03-03 { @extend       %width--01-01;  }
+
+    %width--01-04 { width:   calc-percent(01,04); }
+    %width--02-04 { @extend       %width--01-02;  }
+    %width--03-04 { width:   calc-percent(03,04); }
+    %width--04-04 { @extend       %width--01-01;  }
+
+    %width--01-05 { width:   calc-percent(01,05); }
+    %width--02-05 { width:   calc-percent(02,05); }
+    %width--03-05 { width:   calc-percent(03,05); }
+    %width--04-05 { width:   calc-percent(04,05); }
+    %width--05-05 { @extend       %width--01-01;  }
+
+    %width--01-06 { width:   calc-percent(01,06); }
+    %width--02-06 { @extend       %width--01-03;  }
+    %width--03-06 { @extend       %width--01-02;  }
+    %width--04-06 { @extend       %width--02-03;  }
+    %width--05-06 { width:   calc-percent(05,06); }
+    %width--06-06 { @extend       %width--01-01;  }
+
+    %width--01-07 { width:   calc-percent(01,07); }
+    %width--02-07 { width:   calc-percent(02,07); }
+    %width--03-07 { width:   calc-percent(03,07); }
+    %width--04-07 { width:   calc-percent(04,07); }
+    %width--05-07 { width:   calc-percent(05,07); }
+    %width--06-07 { width:   calc-percent(06,07); }
+    %width--07-07 { @extend       %width--01-01;  }
+
+    %width--01-08 { width:   calc-percent(01,08); }
+    %width--02-08 { @extend       %width--01-04;  }
+    %width--03-08 { width:   calc-percent(03,08); }
+    %width--04-08 { @extend       %width--01-02;  }
+    %width--05-08 { width:   calc-percent(05,08); }
+    %width--06-08 { @extend       %width--03-04;  }
+    %width--07-08 { width:   calc-percent(07,08); }
+    %width--08-08 { @extend       %width--01-01;  }
+
+    %width--01-09 { width:   calc-percent(01,09); }
+    %width--02-09 { width:   calc-percent(02,09); }
+    %width--03-09 { @extend       %width--01-03;  }
+    %width--04-09 { width:   calc-percent(04,09); }
+    %width--05-09 { width:   calc-percent(05,09); }
+    %width--06-09 { @extend       %width--02-03;  }
+    %width--07-09 { width:   calc-percent(07,09); }
+    %width--08-09 { width:   calc-percent(08,09); }
+    %width--09-09 { @extend       %width--01-01;  }
+
+    %width--01-10 { width:   calc-percent(01,10); }
+    %width--02-10 { @extend       %width--01-05;  }
+    %width--03-10 { width:   calc-percent(03,10); }
+    %width--04-10 { @extend       %width--02-05;  }
+    %width--05-10 { @extend       %width--01-02;  }
+    %width--06-10 { @extend       %width--03-05;  }
+    %width--07-10 { width:   calc-percent(07,10); }
+    %width--08-10 { @extend       %width--04-05;  }
+    %width--09-10 { width:   calc-percent(09,10); }
+    %width--10-10 { @extend       %width--01-01;  }
+
+    %width--01-11 { width:   calc-percent(01,11); }
+    %width--02-11 { width:   calc-percent(02,11); }
+    %width--03-11 { width:   calc-percent(03,11); }
+    %width--04-11 { width:   calc-percent(04,11); }
+    %width--05-11 { width:   calc-percent(05,11); }
+    %width--06-11 { width:   calc-percent(06,11); }
+    %width--07-11 { width:   calc-percent(07,11); }
+    %width--08-11 { width:   calc-percent(08,11); }
+    %width--09-11 { width:   calc-percent(09,11); }
+    %width--10-11 { width:   calc-percent(10,11); }
+    %width--11-11 { @extend       %width--01-01;  }
+
+    %width--01-12 { width:   calc-percent(01,12); }
+    %width--02-12 { @extend       %width--01-06;  }
+    %width--03-12 { @extend       %width--01-04;  }
+    %width--04-12 { @extend       %width--01-03;  }
+    %width--05-12 { width:   calc-percent(05,12); }
+    %width--06-12 { @extend       %width--01-02;  }
+    %width--07-12 { width:   calc-percent(07,12); }
+    %width--08-12 { @extend       %width--02-03;  }
+    %width--09-12 { @extend       %width--03-04;  }
+    %width--10-12 { @extend       %width--05-06;  }
+    %width--11-12 { width:   calc-percent(11,12); }
+    %width--12-12 { @extend       %width--01-01;  }
+
+    %width--01-13 { width:   calc-percent(01,13); }
+    %width--02-13 { width:   calc-percent(02,13); }
+    %width--03-13 { width:   calc-percent(03,13); }
+    %width--04-13 { width:   calc-percent(04,13); }
+    %width--05-13 { width:   calc-percent(05,13); }
+    %width--06-13 { width:   calc-percent(06,13); }
+    %width--07-13 { width:   calc-percent(07,13); }
+    %width--08-13 { width:   calc-percent(08,13); }
+    %width--09-13 { width:   calc-percent(09,13); }
+    %width--10-13 { width:   calc-percent(10,13); }
+    %width--11-13 { width:   calc-percent(11,13); }
+    %width--12-13 { width:   calc-percent(12,13); }
+    %width--13-13 { @extend       %width--01-01;  }
+
+    %width--01-14 { width:   calc-percent(01,14); }
+    %width--02-14 { @extend       %width--01-07;  }
+    %width--03-14 { width:   calc-percent(03,14); }
+    %width--04-14 { @extend       %width--02-07;  }
+    %width--05-14 { width:   calc-percent(05,14); }
+    %width--06-14 { @extend       %width--03-07;  }
+    %width--07-14 { @extend       %width--01-02;  }
+    %width--08-14 { @extend       %width--04-07;  }
+    %width--09-14 { width:   calc-percent(09,14); }
+    %width--10-14 { @extend       %width--05-07;  }
+    %width--11-14 { width:   calc-percent(11,14); }
+    %width--12-14 { @extend       %width--06-07;  }
+    %width--13-14 { width:   calc-percent(13,14); }
+    %width--14-14 { @extend       %width--01-01;  }
+
+    %width--01-15 { width:   calc-percent(01,15); }
+    %width--02-15 { width:   calc-percent(02,15); }
+    %width--03-15 { @extend       %width--01-05;  }
+    %width--04-15 { width:   calc-percent(04,15); }
+    %width--05-15 { @extend       %width--01-03;  }
+    %width--06-15 { @extend       %width--02-05;  }
+    %width--07-15 { width:   calc-percent(07,15); }
+    %width--08-15 { width:   calc-percent(08,15); }
+    %width--09-15 { @extend       %width--03-05;  }
+    %width--10-15 { @extend       %width--02-03;  }
+    %width--11-15 { width:   calc-percent(11,15); }
+    %width--12-15 { @extend       %width--04-05;  }
+    %width--13-15 { width:   calc-percent(13,15); }
+    %width--14-15 { width:   calc-percent(14,15); }
+    %width--15-15 { @extend       %width--01-01;  }
+
+    %width--01-16 { width:   calc-percent(01,16); }
+    %width--02-16 { @extend       %width--01-08;  }
+    %width--03-16 { width:   calc-percent(03,16); }
+    %width--04-16 { @extend       %width--01-04;  }
+    %width--05-16 { width:   calc-percent(05,16); }
+    %width--06-16 { @extend       %width--03-08;  }
+    %width--07-16 { width:   calc-percent(07,16); }
+    %width--08-16 { @extend       %width--01-02;  }
+    %width--09-16 { width:   calc-percent(09,16); }
+    %width--10-16 { @extend       %width--05-08;  }
+    %width--11-16 { width:   calc-percent(11,16); }
+    %width--12-16 { @extend       %width--03-04;  }
+    %width--13-16 { width:   calc-percent(13,16); }
+    %width--14-16 { @extend       %width--07-08;  }
+    %width--15-16 { width:   calc-percent(15,16); }
+    %width--16-16 { @extend       %width--01-01;  }
+
+    %width--01-17 { width:   calc-percent(01,17); }
+    %width--02-17 { width:   calc-percent(02,17); }
+    %width--03-17 { width:   calc-percent(03,17); }
+    %width--04-17 { width:   calc-percent(04,17); }
+    %width--05-17 { width:   calc-percent(05,17); }
+    %width--06-17 { width:   calc-percent(06,17); }
+    %width--07-17 { width:   calc-percent(07,17); }
+    %width--08-17 { width:   calc-percent(08,17); }
+    %width--09-17 { width:   calc-percent(09,17); }
+    %width--10-17 { width:   calc-percent(10,17); }
+    %width--11-17 { width:   calc-percent(11,17); }
+    %width--12-17 { width:   calc-percent(12,17); }
+    %width--13-17 { width:   calc-percent(13,17); }
+    %width--14-17 { width:   calc-percent(14,17); }
+    %width--15-17 { width:   calc-percent(15,17); }
+    %width--16-17 { width:   calc-percent(16,17); }
+    %width--17-17 { @extend       %width--01-01;  }
+
+    %width--01-18 { width:   calc-percent(01,18); }
+    %width--02-18 { @extend       %width--01-09;  }
+    %width--03-18 { @extend       %width--01-06;  }
+    %width--04-18 { @extend       %width--02-09;  }
+    %width--05-18 { width:   calc-percent(05,18); }
+    %width--06-18 { @extend       %width--01-03;  }
+    %width--07-18 { width:   calc-percent(07,18); }
+    %width--08-18 { @extend       %width--04-09;  }
+    %width--09-18 { @extend       %width--01-02;  }
+    %width--10-18 { @extend       %width--05-09;  }
+    %width--11-18 { width:   calc-percent(11,18); }
+    %width--12-18 { @extend       %width--02-03;  }
+    %width--13-18 { width:   calc-percent(13,18); }
+    %width--14-18 { @extend       %width--07-09;  }
+    %width--15-18 { @extend       %width--05-06;  }
+    %width--16-18 { @extend       %width--08-09;  }
+    %width--17-18 { width:   calc-percent(17,18); }
+    %width--18-18 { @extend       %width--01-01;  }
+
+    %width--01-19 { width:   calc-percent(01,19); }
+    %width--02-19 { width:   calc-percent(02,19); }
+    %width--03-19 { width:   calc-percent(03,19); }
+    %width--04-19 { width:   calc-percent(04,19); }
+    %width--05-19 { width:   calc-percent(05,19); }
+    %width--06-19 { width:   calc-percent(06,19); }
+    %width--07-19 { width:   calc-percent(07,19); }
+    %width--08-19 { width:   calc-percent(08,19); }
+    %width--09-19 { width:   calc-percent(09,19); }
+    %width--10-19 { width:   calc-percent(10,19); }
+    %width--11-19 { width:   calc-percent(11,19); }
+    %width--12-19 { width:   calc-percent(12,19); }
+    %width--13-19 { width:   calc-percent(13,19); }
+    %width--14-19 { width:   calc-percent(14,19); }
+    %width--15-19 { width:   calc-percent(15,19); }
+    %width--16-19 { width:   calc-percent(16,19); }
+    %width--17-19 { width:   calc-percent(17,19); }
+    %width--18-19 { width:   calc-percent(18,19); }
+    %width--19-19 { @extend       %width--01-01;  }
+
+    %width--01-20 { width:   calc-percent(01,20); }
+    %width--02-20 { @extend       %width--01-10;  }
+    %width--03-20 { width:   calc-percent(03,20); }
+    %width--04-20 { @extend       %width--01-05;  }
+    %width--05-20 { @extend       %width--01-04;  }
+    %width--06-20 { @extend       %width--03-10;  }
+    %width--07-20 { width:   calc-percent(07,20); }
+    %width--08-20 { @extend       %width--02-05;  }
+    %width--09-20 { width:   calc-percent(09,20); }
+    %width--10-20 { @extend       %width--01-02;  }
+    %width--11-20 { width:   calc-percent(11,20); }
+    %width--12-20 { @extend       %width--03-05;  }
+    %width--13-20 { width:   calc-percent(13,20); }
+    %width--14-20 { @extend       %width--07-10;  }
+    %width--15-20 { @extend       %width--03-04;  }
+    %width--16-20 { @extend       %width--04-05;  }
+    %width--17-20 { width:   calc-percent(17,20); }
+    %width--18-20 { @extend       %width--09-10;  }
+    %width--19-20 { width:   calc-percent(19,20); }
+    %width--20-20 { @extend       %width--01-01;  }
+
+}

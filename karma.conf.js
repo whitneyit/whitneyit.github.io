@@ -55,7 +55,7 @@ module.exports = function (config) {
                 'included' : false
             },
             {
-                'pattern'  : 'tests/specs/**/*.spec.ts',
+                'pattern'  : 'tests/specs/src/ts/**/*.spec.ts',
                 'included' : false
             },
             {

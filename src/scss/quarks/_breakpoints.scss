@@ -1,0 +1,268 @@
+// ========================================================================== //
+//     $BREAKPOINTS                                                           //
+// ========================================================================== //
+
+$breakpoint-cache: null;
+$breakpoint-variants: null;
+
+@function buildCacheItem ($variantName, $regions, $index) {
+
+    $regionObj:    nth($regions, $index);
+
+    $regionName:      nth($regionObj, 1);
+    $min:             nth($regionObj, 2);
+    $max:             nth($regionObj, 3);
+
+    $query:                           "";
+
+    @if ($variantName == "lte") {
+
+        @if ($max != null) {
+            $query: $query + " and (max-width: #{$max})";
+        }
+
+    } @else if ($variantName == "lt") {
+
+        @if ($min == null) {
+            $query: false;
+        } @else {
+            $query: $query + " and (max-width: #{$min})";
+        }
+
+    } @else if ($variantName == "eq") {
+
+        @if ($min != null) {
+            $query: $query + " and (min-width: #{$min})";
+        }
+
+        @if ($max != null) {
+            $query: $query + " and (max-width: #{$max})";
+        }
+
+    } @else if ($variantName == "gt") {
+
+        @if ($max == null) {
+            $query: false;
+        } @else {
+            $query: $query + " and (min-width: #{$max})";
+        }
+
+    } @else if ($variantName == "gte") {
+
+        @if ($min != null) {
+            $query: $query + " and (min-width: #{$min})";
+        }
+
+    }
+
+    $result: (
+        $regionName (
+            $query
+        )
+    );
+
+    @return $result;
+
+}
+
+@function buildCache ($variants, $regions) {
+
+    $tempCache: ();
+    $currentVarient: null;
+    $variantName:    null;
+    $variantEnabled: null;
+
+    @each $variantsObj in $variants {
+
+        $variantName:    first($variantsObj);
+        $variantEnabled:  last($variantsObj);
+
+        $currentVarient: (
+            $variantName
+        );
+
+        @if ($variantEnabled == true) {
+
+            @for $index from 1 through length($regions) {
+                $currentRegion: buildCacheItem($variantName, $regions, $index);
+                $currentVarient: append($currentVarient, $currentRegion);
+            }
+
+        } @else {
+            $currentVarient: false;
+        }
+
+        $tempCache: append($tempCache, $currentVarient);
+
+    }
+
+    @return $tempCache;
+
+}
+
+@function getClassName ($prefix, $regionName, $variantName) {
+
+    $className: "";
+
+    @if ($regionName != "") {
+
+        @if ($variantName == "eq") {
+            $className: $regionName;
+        } @else {
+            $className: $variantName + "-" + $regionName;
+        }
+
+    }
+
+    @if ($regionName != "") {
+        @return $prefix + "-" + $className;
+    }
+
+    @return $className;
+
+}
+
+@function getQuery ($variantName, $regionName) {
+
+    $result: null;
+    $temp: null;
+
+    @if ($USE_BREAKPOINTS == true) {
+
+        @if ($variantName == "lte") {
+            $temp: nth($breakpoint-cache, 1);
+        } @else if ($variantName == "lt") {
+            $temp: nth($breakpoint-cache, 2);
+        } @else if ($variantName == "eq") {
+            $temp: nth($breakpoint-cache, 3);
+        } @else if ($variantName == "gt") {
+            $temp: nth($breakpoint-cache, 4);
+        } @else if ($variantName == "gte") {
+            $temp: nth($breakpoint-cache, 5);
+        } @else {
+            @warn "Could not getQuery() with a $variantName of `#{$variantName}`";
+        }
+
+    }
+
+    @if ($temp != null) {
+        @each $cacheObj in $temp {
+            @if ($regionName == first($cacheObj)) {
+                $result: last(last($cacheObj));
+            }
+        }
+    }
+
+    @return $result;
+
+}
+
+@mixin breakpoint ($regionName, $variantName:"eq") {
+
+    $query: null;
+
+    @if ($USE_BREAKPOINTS == true) {
+
+        $query: getQuery($variantName, $regionName);
+
+        // Null is when the getQuery command cannot find the query
+        @if ($query == null) {
+            @warn "A break point for `#{$variantName}` was not found.";
+        } @else {
+
+            // Here false means a query that should not exist.
+            // Such as less than the smallest query or greater than the largest.
+            @if ($query == false) {
+
+                // Here we log out some info to let the developer know what's going on
+                /* The media query for region: "#{$regionName}", was suppressed for variant: "#{$variantName}" */
+
+            // If we found a valud query
+            } @else {
+
+                // Here an empty string means no media query needed.
+                @if ($query == "") {
+                    @content;
+
+                // Here we have a valid query to dump out.
+                } @else {
+
+                    $query: "screen" + $query;
+
+                    @media #{$query} {
+                        @content;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+@mixin hideOrShowRegion ($stub) {
+
+    @if ($USE_BREAKPOINTS == true and $USE_BREAKPOINTS_FALLBACKS == true) {
+
+        @if ($USE_BREAKPOINTS_HIDE == true) {
+            .#{$stub}--hide {
+                display: none;
+            }
+        }
+
+        @if ($USE_BREAKPOINTS_SHOW == true) {
+            .#{$stub}--show {
+                display: block;
+            }
+
+        }
+
+    }
+
+}
+
+@if ($USE_BREAKPOINTS == true) {
+
+    $breakpoint-variants: (
+        "lte"   $USE_BREAKPOINTS_LTE,
+        "lt"    $USE_BREAKPOINTS_LT,
+        "eq"    $USE_BREAKPOINTS_EQ,
+        "gt"    $USE_BREAKPOINTS_GT,
+        "gte"   $USE_BREAKPOINTS_GTE
+    );
+
+    $regionName: null;
+    $stub: null;
+
+    // Build the cache
+    $breakpoint-cache: buildCache($breakpoint-variants, $BREAKPOINT_REGION_NAMES);
+
+    // Here we stamp out the fallback option for "hide and shows"
+    @include hideOrShowRegion($BREAKPOINT_FALLBACK_NAME);
+
+    @each $regionObj in $BREAKPOINT_REGION_NAMES {
+
+        $regionName: first($regionObj);
+
+        @each $variantsObj in $breakpoint-variants {
+
+            $variantName:    first($variantsObj);
+            $variantEnabled:  last($variantsObj);
+
+            @if ($variantEnabled == true) {
+
+                @include breakpoint($regionName, $variantName) {
+                    $stub: getClassName($BREAKPOINT_PREFIX_NAME, $regionName, $variantName);
+                    @include hideOrShowRegion($stub);
+                }
+
+            }
+
+        }
+
+    }
+
+}

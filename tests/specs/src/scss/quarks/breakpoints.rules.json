@@ -1,0 +1,810 @@
+{
+    " 240 x 1000" : {
+        ".otherwise--show" : {
+            "display" : "block"
+        },
+        ".otherwise--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-xsm--show" : {
+           "display" : "inline"
+        },
+        ".when-lt-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--show" : {
+            "display" : "block"
+        },
+        ".when-lte-xsm--hide" : {
+            "display" : "none"
+        },
+        ".when-xsm--show" : {
+            "display" : "block"
+        },
+        ".when-xsm--hide" : {
+            "display" : "none"
+        },
+        ".when-gte-xsm--show" : {
+            "display" : "block"
+        },
+        ".when-gte-xsm--hide" : {
+            "display" : "none"
+        },
+        ".when-gt-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-sm--show" : {
+            "display" : "block"
+        },
+        ".when-lt-sm--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-sm--show" : {
+            "display" : "block"
+        },
+        ".when-lte-sm--hide" : {
+            "display" : "none"
+        },
+        ".when-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-md--show" : {
+            "display" : "block"
+        },
+        ".when-lt-md--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-md--show" : {
+            "display" : "block"
+        },
+        ".when-lte-md--hide" : {
+            "display" : "none"
+        },
+        ".when-md--show" : {
+            "display" : "inline"
+        },
+        ".when-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-md--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-md--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-lg--show" : {
+            "display" : "block"
+        },
+        ".when-lt-lg--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-lg--show" : {
+            "display" : "block"
+        },
+        ".when-lte-lg--hide" : {
+            "display" : "none"
+        },
+        ".when-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-xlg--show" : {
+            "display" : "block"
+        },
+        ".when-lt-xlg--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-xlg--show" : {
+            "display" : "block"
+        },
+        ".when-lte-xlg--hide" : {
+            "display" : "none"
+        },
+        ".when-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-xlg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-xlg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--hide" : {
+            "display" : "inline"
+        }
+    },
+    " 320 x 1000" : {
+        ".otherwise--show" : {
+            "display" : "block"
+        },
+        ".otherwise--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-xsm--show" : {
+            "display" : "block"
+        },
+        ".when-gte-xsm--hide" : {
+            "display" : "none"
+        },
+        ".when-gt-xsm--show" : {
+            "display" : "block"
+        },
+        ".when-gt-xsm--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-sm--show" : {
+            "display" : "block"
+        },
+        ".when-lte-sm--hide" : {
+            "display" : "none"
+        },
+        ".when-sm--show" : {
+            "display" : "block"
+        },
+        ".when-sm--hide" : {
+            "display" : "none"
+        },
+        ".when-gte-sm--show" : {
+            "display" : "block"
+        },
+        ".when-gte-sm--hide" : {
+            "display" : "none"
+        },
+        ".when-gt-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-md--show" : {
+            "display" : "block"
+        },
+        ".when-lt-md--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-md--show" : {
+            "display" : "block"
+        },
+        ".when-lte-md--hide" : {
+            "display" : "none"
+        },
+        ".when-md--show" : {
+            "display" : "inline"
+        },
+        ".when-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-md--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-md--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-lg--show" : {
+            "display" : "block"
+        },
+        ".when-lt-lg--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-lg--show" : {
+            "display" : "block"
+        },
+        ".when-lte-lg--hide" : {
+            "display" : "none"
+        },
+        ".when-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-xlg--show" : {
+            "display" : "block"
+        },
+        ".when-lt-xlg--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-xlg--show" : {
+            "display" : "block"
+        },
+        ".when-lte-xlg--hide" : {
+            "display" : "none"
+        },
+        ".when-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-xlg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-xlg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--hide" : {
+            "display" : "inline"
+        }
+    },
+    " 768 x 1000" : {
+        ".otherwise--show" : {
+            "display" : "block"
+        },
+        ".otherwise--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-xsm--show" : {
+            "display" : "block"
+        },
+        ".when-gte-xsm--hide" : {
+            "display" : "none"
+        },
+        ".when-gt-xsm--show" : {
+            "display" : "block"
+        },
+        ".when-gt-xsm--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-lte-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-sm--show" : {
+            "display" : "inline"
+        },
+        ".when-sm--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-sm--show" : {
+            "display" : "block"
+        },
+        ".when-gte-sm--hide" : {
+            "display" : "none"
+        },
+        ".when-gt-sm--show" : {
+            "display" : "block"
+        },
+        ".when-gt-sm--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-md--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-md--show" : {
+            "display" : "block"
+        },
+        ".when-lte-md--hide" : {
+            "display" : "none"
+        },
+        ".when-md--show" : {
+            "display" : "block"
+        },
+        ".when-md--hide" : {
+            "display" : "none"
+        },
+        ".when-gte-md--show" : {
+            "display" : "block"
+        },
+        ".when-gte-md--hide" : {
+            "display" : "none"
+        },
+        ".when-gt-md--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-md--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-lg--show" : {
+            "display" : "block"
+        },
+        ".when-lt-lg--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-lg--show" : {
+            "display" : "block"
+        },
+        ".when-lte-lg--hide" : {
+            "display" : "none"
+        },
+        ".when-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-lg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-lg--hide" : {
+            "display" : "inline"
+        },
+        ".when-lt-xlg--show" : {
+            "display" : "block"
+        },
+        ".when-lt-xlg--hide" : {
+            "display" : "none"
+        },
+        ".when-lte-xlg--show" : {
+            "display" : "block"
+        },
+        ".when-lte-xlg--hide" : {
+            "display" : "none"
+        },
+        ".when-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-xlg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gte-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gte-xlg--hide" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--hide" : {
+            "display" : "inline"
+        }
+    },
+    " 992 x 1000" : {
+        ".otherwise--show" : {
+            "display" : "block"
+        },
+        ".otherwise--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--show" : {
+        },
+        ".when-lte-xsm--hide" : {
+        },
+        ".when-xsm--show" : {
+        },
+        ".when-xsm--hide" : {
+        },
+        ".when-gte-xsm--show" : {
+        },
+        ".when-gte-xsm--hide" : {
+        },
+        ".when-gt-xsm--show" : {
+        },
+        ".when-gt-xsm--hide" : {
+        },
+        ".when-lt-sm--show" : {
+        },
+        ".when-lt-sm--hide" : {
+        },
+        ".when-lte-sm--show" : {
+        },
+        ".when-lte-sm--hide" : {
+        },
+        ".when-sm--show" : {
+        },
+        ".when-sm--hide" : {
+        },
+        ".when-gte-sm--show" : {
+        },
+        ".when-gte-sm--hide" : {
+        },
+        ".when-gt-sm--show" : {
+        },
+        ".when-gt-sm--hide" : {
+        },
+        ".when-lt-md--show" : {
+        },
+        ".when-lt-md--hide" : {
+        },
+        ".when-lte-md--show" : {
+        },
+        ".when-lte-md--hide" : {
+        },
+        ".when-md--show" : {
+        },
+        ".when-md--hide" : {
+        },
+        ".when-gte-md--show" : {
+        },
+        ".when-gte-md--hide" : {
+        },
+        ".when-gt-md--show" : {
+        },
+        ".when-gt-md--hide" : {
+        },
+        ".when-lt-lg--show" : {
+        },
+        ".when-lt-lg--hide" : {
+        },
+        ".when-lte-lg--show" : {
+        },
+        ".when-lte-lg--hide" : {
+        },
+        ".when-lg--show" : {
+        },
+        ".when-lg--hide" : {
+        },
+        ".when-gte-lg--show" : {
+        },
+        ".when-gte-lg--hide" : {
+        },
+        ".when-gt-lg--show" : {
+        },
+        ".when-gt-lg--hide" : {
+        },
+        ".when-lt-xlg--show" : {
+        },
+        ".when-lt-xlg--hide" : {
+        },
+        ".when-lte-xlg--show" : {
+        },
+        ".when-lte-xlg--hide" : {
+        },
+        ".when-xlg--show" : {
+        },
+        ".when-xlg--hide" : {
+        },
+        ".when-gte-xlg--show" : {
+        },
+        ".when-gte-xlg--hide" : {
+        },
+        ".when-gt-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--hide" : {
+            "display" : "inline"
+        }
+    },
+    "1200 x 1000" : {
+        ".otherwise--show" : {
+            "display" : "block"
+        },
+        ".otherwise--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--show" : {
+        },
+        ".when-lte-xsm--hide" : {
+        },
+        ".when-xsm--show" : {
+        },
+        ".when-xsm--hide" : {
+        },
+        ".when-gte-xsm--show" : {
+        },
+        ".when-gte-xsm--hide" : {
+        },
+        ".when-gt-xsm--show" : {
+        },
+        ".when-gt-xsm--hide" : {
+        },
+        ".when-lt-sm--show" : {
+        },
+        ".when-lt-sm--hide" : {
+        },
+        ".when-lte-sm--show" : {
+        },
+        ".when-lte-sm--hide" : {
+        },
+        ".when-sm--show" : {
+        },
+        ".when-sm--hide" : {
+        },
+        ".when-gte-sm--show" : {
+        },
+        ".when-gte-sm--hide" : {
+        },
+        ".when-gt-sm--show" : {
+        },
+        ".when-gt-sm--hide" : {
+        },
+        ".when-lt-md--show" : {
+        },
+        ".when-lt-md--hide" : {
+        },
+        ".when-lte-md--show" : {
+        },
+        ".when-lte-md--hide" : {
+        },
+        ".when-md--show" : {
+        },
+        ".when-md--hide" : {
+        },
+        ".when-gte-md--show" : {
+        },
+        ".when-gte-md--hide" : {
+        },
+        ".when-gt-md--show" : {
+        },
+        ".when-gt-md--hide" : {
+        },
+        ".when-lt-lg--show" : {
+        },
+        ".when-lt-lg--hide" : {
+        },
+        ".when-lte-lg--show" : {
+        },
+        ".when-lte-lg--hide" : {
+        },
+        ".when-lg--show" : {
+        },
+        ".when-lg--hide" : {
+        },
+        ".when-gte-lg--show" : {
+        },
+        ".when-gte-lg--hide" : {
+        },
+        ".when-gt-lg--show" : {
+        },
+        ".when-gt-lg--hide" : {
+        },
+        ".when-lt-xlg--show" : {
+        },
+        ".when-lt-xlg--hide" : {
+        },
+        ".when-lte-xlg--show" : {
+        },
+        ".when-lte-xlg--hide" : {
+        },
+        ".when-xlg--show" : {
+        },
+        ".when-xlg--hide" : {
+        },
+        ".when-gte-xlg--show" : {
+        },
+        ".when-gte-xlg--hide" : {
+        },
+        ".when-gt-xlg--show" : {
+            "display" : "inline"
+        },
+        ".when-gt-xlg--hide" : {
+            "display" : "inline"
+        }
+    },
+    "1600 x 1000" : {
+        ".otherwise--show" : {
+            "display" : "block"
+        },
+        ".otherwise--hide" : {
+            "display" : "none"
+        },
+        ".when-lt-xsm--show" : {
+            "display" : "inline"
+        },
+        ".when-lt-xsm--hide" : {
+            "display" : "inline"
+        },
+        ".when-lte-xsm--show" : {
+        },
+        ".when-lte-xsm--hide" : {
+        },
+        ".when-xsm--show" : {
+        },
+        ".when-xsm--hide" : {
+        },
+        ".when-gte-xsm--show" : {
+        },
+        ".when-gte-xsm--hide" : {
+        },
+        ".when-gt-xsm--show" : {
+        },
+        ".when-gt-xsm--hide" : {
+        },
+        ".when-lt-sm--show" : {
+        },
+        ".when-lt-sm--hide" : {
+        },
+        ".when-lte-sm--show" : {
+        },
+        ".when-lte-sm--hide" : {
+        },
+        ".when-sm--show" : {
+        },
+        ".when-sm--hide" : {
+        },
+        ".when-gte-sm--show" : {
+        },
+        ".when-gte-sm--hide" : {
+        },
+        ".when-gt-sm--show" : {
+        },
+        ".when-gt-sm--hide" : {
+        },
+        ".when-lt-md--show" : {
+        },
+        ".when-lt-md--hide" : {
+        },
+        ".when-lte-md--show" : {
+        },
+        ".when-lte-md--hide" : {
+        },
+        ".when-md--show" : {
+        },
+        ".when-md--hide" : {
+        },
+        ".when-gte-md--show" : {
+        },
+        ".when-gte-md--hide" : {
+        },
+        ".when-gt-md--show" : {
+        },
+        ".when-gt-md--hide" : {
+        },
+        ".when-lt-lg--show" : {
+        },
+        ".when-lt-lg--hide" : {
+        },
+        ".when-lte-lg--show" : {
+        },
+        ".when-lte-lg--hide" : {
+        },
+        ".when-lg--show" : {
+        },
+        ".when-lg--hide" : {
+        },
+        ".when-gte-lg--show" : {
+        },
+        ".when-gte-lg--hide" : {
+        },
+        ".when-gt-lg--show" : {
+        },
+        ".when-gt-lg--hide" : {
+        },
+        ".when-lt-xlg--show" : {
+        },
+        ".when-lt-xlg--hide" : {
+        },
+        ".when-lte-xlg--show" : {
+        },
+        ".when-lte-xlg--hide" : {
+        },
+        ".when-xlg--show" : {
+        },
+        ".when-xlg--hide" : {
+        },
+        ".when-gte-xlg--show" : {
+        },
+        ".when-gte-xlg--hide" : {
+        },
+        ".when-gt-xlg--show" : {
+        },
+        ".when-gt-xlg--hide" : {
+        }
+    }
+}

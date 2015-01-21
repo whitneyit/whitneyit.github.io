@@ -19,6 +19,7 @@ var
 
     // Grab our non gulp packages.
     de         = require('detect-environment'),
+    del        = require('del'),
     psi        = require('psi'),
     yaml       = require('js-yaml').safeLoad,
     yargs      = require('yargs'),
@@ -48,6 +49,7 @@ var
     sass       = require('gulp-sass'),
     serve      = require('gulp-serve'),
     size       = require('gulp-size'),
+    tap        = require('gulp-tap'),
     tmpl       = require('gulp-template'),
     ts         = require('gulp-typescript'),
     uglify     = require('gulp-uglify'),
@@ -533,6 +535,13 @@ gulp.task('serve:site', serve({
     'root'       : '_site'
 }));
 
+// Serves the `tests` directory.
+gulp.task('serve:tests', serve({
+    'middleware' : middle('tests'),
+    'port'       : port,
+    'root'       : 'tests'
+}));
+
 ////////////////////////////////////////
 //                                    //
 //               Tasks                //
@@ -612,6 +621,36 @@ gulp.task('release', ['jekyll'], function (done) {
 //                                    //
 ////////////////////////////////////////
 
+// Tests our SCSS files.
+gulp.task('test:scss', function (done) {
+    var
+        filter = gfilter(['**/*.js']),
+        specs = [];
+    gulp.src(['tests/specs/src/scss/**/*'])
+        .on('error', gutil.log)
+        .pipe(data(dataFn(stamp)))
+        .pipe(tmpl())
+        .pipe(gulp.dest('.casper-temp-dir'))
+        .pipe(filter)
+        .pipe(tap(function (file) {
+            specs.push(file.path);
+        }))
+        .on('end', function () {
+            var
+                casperArgs = ['--concise', '--includes=tests/helpers/casper.includes.js', 'test'],
+                options = {'stdio' : 'inherit'};
+            casperArgs = casperArgs.concat(specs);
+            spawn('casperjs', casperArgs, options).on('close', function () {
+                del(['.casper-temp-dir'], function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                    done();
+                });
+            });
+        });
+});
+
 // Tests our TypeScript files.
 gulp.task('test:ts', ['clean:coverage'], function () {
     return gulp.src(['./fake'])
@@ -624,6 +663,7 @@ gulp.task('test:ts', ['clean:coverage'], function () {
 
 // Run all of our tests.
 gulp.task('test', [
+    'test:scss',
     'test:ts'
 ]);
 
