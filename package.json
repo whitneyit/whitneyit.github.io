@@ -57,7 +57,7 @@
     "gulp-size": "^1.0.0",
     "gulp-tap": "^0.1.3",
     "gulp-template": "^1.0.0",
-    "gulp-typescript": "git://github.com/whitneyit/gulp-typescript.git#9ab6eaf89fed1a7b4f3fc544b67d96931872f6ae",
+    "gulp-typescript": "^2.4.2",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
     "js-yaml": "^3.1.0",
