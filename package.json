@@ -19,9 +19,8 @@
     "url": "https://github.com/whitneyit/whitneyit.github.io/issues"
   },
   "scripts": {
-    "start": "npm install && ./node_modules/.bin/bower install --config.interactive=false && ./node_modules/.bin/tsd update && ./node_modules/.bin/gulp default",
-    "test": "npm start && ./node_modules/.bin/gulp test",
-    "coveralls": "cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls"
+    "start": "npm install && ./node_modules/.bin/bower install --config.interactive=false && ./node_modules/.bin/tsd update",
+    "test": "./node_modules/.bin/gulp test"
   },
   "dependencies": {},
   "devDependencies": {

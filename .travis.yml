@@ -1,5 +1,40 @@
 language: node_js
 node_js:
   - '0.10'
+
+before_install:
+  # Check Java Install
+  - java -version
+
+  # Download and install Galen
+  - wget https://github.com/galenframework/galen/releases/download/galen-1.5.3/galen-bin-1.5.3.zip
+  - unzip galen-bin-1.5.3.zip
+  - sudo mv galen-bin-1.5.3/galen /usr/local/bin
+  - sudo mv galen-bin-1.5.3/galen.jar /usr/local/bin
+  - rm -rf galen-bin-1.5.3
+  - rm galen-bin-1.5.3.zip
+
+  # Configure npm
+  - npm config set spin false
+  - npm config set loglevel http
+
+  # Install project build tools
+  - npm install -g bower
+  - npm install -g gulp
+  - npm install -g tsd
+
+install:
+  # Install dependencies
+  - bower install --config.interactive=false
+  - tsd update
+  - npm install
+
+script:
+  # Run the tests seperatly so as not to block PhantomJS
+  - gulp test:scss
+  - gulp test:ts
+  - gulp test:ui
+
 after_success:
-  - npm run coveralls
+  # Report coverage to coveralls.io
+  - cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls
