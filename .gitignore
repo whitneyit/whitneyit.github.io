@@ -8,6 +8,7 @@ dist/**
 docs/**
 node_modules/**
 plato/**
+reports/**
 typings/**
 
 # Files
@@ -16,3 +17,4 @@ typings/**
 .env.*.yml
 .Thumbs.db
 npm-debug.log
+phantomjsdriver.log

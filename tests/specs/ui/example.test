@@ -1,0 +1,17 @@
+@@ set
+    spec    tests/specs/ui/example.spec
+    url     http://samples.galenframework.com/tutorial1/tutorial1.html
+
+@@ parameterized
+    | browser    |
+    | phantomjs  |
+
+@@ parameterized
+    | breakpoint | tags        | size     |
+    | Mobile     | all,mobile  | 320x600  |
+    | Tablet     | all,tablet  | 640x480  |
+    | Desktop    | all,desktop | 1024x800 |
+
+Home page on ${breakpoint}
+    selenium ${browser} ${url} ${size}
+        check ${spec} --include "${tags}"

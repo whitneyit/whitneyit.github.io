@@ -18,6 +18,7 @@ exclude:
     - "lib"
     - "node_modules"
     - "plato"
+    - "reports"
     - "src"
     - "tests"
     - "typings"
@@ -31,6 +32,7 @@ exclude:
     - "LICENSE.md"
     - "npm-debug.log"
     - "package.json"
+    - "phantomjsdriver.log"
     - "README.md"
     - "tsd.json"
 lsi: false

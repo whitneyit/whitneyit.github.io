@@ -13,11 +13,13 @@ var
     // Grab any packages they we have written.
     argToBool  = require('./lib/argToBool'),
     clean      = require('./lib/clean'),
+    galen      = require('./lib/galen'),
     isBranch   = require('./lib/isBranch'),
     log        = require('./lib/log'),
     middle     = require('./lib/middle'),
 
     // Grab our non gulp packages.
+    async      = require('async'),
     de         = require('detect-environment'),
     del        = require('del'),
     psi        = require('psi'),
@@ -202,6 +204,11 @@ gulp.task('clean:docs', function (done) {
 // Cleans the `plato` directory.
 gulp.task('clean:plato', function (done) {
     clean('plato', done);
+});
+
+// Cleans the `reports` directory.
+gulp.task('clean:reports', function (done) {
+    clean('reports', done);
 });
 
 // Cleans the `root` directory.
@@ -528,6 +535,13 @@ gulp.task('serve:plato', serve({
     'root'       : 'plato'
 }));
 
+// Serves the `reports` directory.
+gulp.task('serve:reports', serve({
+    'middleware' : middle('reports'),
+    'port'       : port,
+    'root'       : 'reports'
+}));
+
 // Serves the `_site` directory.
 gulp.task('serve:site', serve({
     'middleware' : middle('_site'),
@@ -661,10 +675,28 @@ gulp.task('test:ts', ['clean:coverage'], function () {
         }));
 });
 
+// Tests our User Interfaces
+gulp.task('test:ui', ['clean:reports'], function (done) {
+    var
+        files = [];
+    gulp.src(['tests/specs/ui/**/*.test'])
+        .pipe(tap(function (file) {
+            files.push(file);
+        }))
+        .on('end', function () {
+            async.mapSeries(files, function (file, next) {
+                galen(file.path, 'reports/' + file.relative.replace(/\.test/, ''), next);
+            }, function () {
+                done();
+            });
+        });
+});
+
 // Run all of our tests.
 gulp.task('test', [
     'test:scss',
-    'test:ts'
+    'test:ts',
+    'test:ui'
 ]);
 
 ////////////////////////////////////////
