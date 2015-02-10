@@ -7,7 +7,6 @@ coverage/**
 dist/**
 docs/**
 node_modules/**
-plato/**
 reports/**
 typings/**
 

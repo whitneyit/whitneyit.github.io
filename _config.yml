@@ -17,7 +17,6 @@ exclude:
     - "docs"
     - "lib"
     - "node_modules"
-    - "plato"
     - "reports"
     - "src"
     - "tests"

@@ -50,7 +50,6 @@
     "gulp-jsonlint": "^1.0.1",
     "gulp-karma": "0.0.4",
     "gulp-order": "^1.1.1",
-    "gulp-plato": "^1.0.1",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^0.7.1",
     "gulp-serve": "^0.2.0",

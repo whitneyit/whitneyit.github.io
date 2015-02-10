@@ -6,7 +6,6 @@ coverage/**
 dist/**
 docs/**
 node_modules/**
-plato/**
 reports/**
 
 # Files

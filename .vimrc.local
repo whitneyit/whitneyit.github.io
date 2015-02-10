@@ -9,7 +9,6 @@ set wildignore+=*/coverage/**
 set wildignore+=*/dist/**
 set wildignore+=*/docs/**
 set wildignore+=*/node_modules/**
-set wildignore+=*/plato/**
 set wildignore+=*/reports/**
 set wildignore+=*/typings/**
 
@@ -20,4 +19,4 @@ set wildignore+=*npm-debug.log
 set wildignore+=*phantomjsdriver.log
 
 " Nerdtree specific ignore
-let NERDTreeIgnore += ['^.git$', '^.sass-cache$', '^.tsc$', '^_site$', '^assets$', '^bower_components$', '^coverage$', '^dist$', '^docs$', '^node_modules$', '^plato$', '^reports', '^typings$', '^npm-debug.log$', '^phantomjsdriver.log']
+let NERDTreeIgnore += ['^.git$', '^.sass-cache$', '^.tsc$', '^_site$', '^assets$', '^bower_components$', '^coverage$', '^dist$', '^docs$', '^node_modules$', '^reports', '^typings$', '^npm-debug.log$', '^phantomjsdriver.log']

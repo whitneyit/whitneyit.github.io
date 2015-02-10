@@ -46,7 +46,6 @@ var
     jsonlint   = require('gulp-jsonlint'),
     karma      = require('gulp-karma'),
     order      = require('gulp-order'),
-    plato      = require('gulp-plato'),
     rename     = require('gulp-rename'),
     sass       = require('gulp-sass'),
     serve      = require('gulp-serve'),
@@ -201,11 +200,6 @@ gulp.task('clean:docs', function (done) {
     clean('docs', done);
 });
 
-// Cleans the `plato` directory.
-gulp.task('clean:plato', function (done) {
-    clean('plato', done);
-});
-
 // Cleans the `reports` directory.
 gulp.task('clean:reports', function (done) {
     clean('reports', done);
@@ -243,7 +237,6 @@ gulp.task('clean', [
     'clean:coverage',
     'clean:dist',
     'clean:docs',
-    'clean:plato',
     'clean:root'
 ]);
 
@@ -528,13 +521,6 @@ gulp.task('serve:docs', serve({
     'root'       : 'docs'
 }));
 
-// Serves the `plato` directory.
-gulp.task('serve:plato', serve({
-    'middleware' : middle('plato'),
-    'port'       : port,
-    'root'       : 'plato'
-}));
-
 // Serves the `reports` directory.
 gulp.task('serve:reports', serve({
     'middleware' : middle('reports'),
@@ -568,16 +554,6 @@ gulp.task('doc', ['clean:docs'], function () {
         .pipe(data(dataFn(stamp)))
         .pipe(tmpl())
         .pipe(jsdoc('docs'));
-});
-
-// Generate complexity analysis.
-gulp.task('plato', ['clean:plato'], function () {
-    return gulp.src(['src/ts/**/*.ts'])
-        .pipe(plato('plato', {
-            'complexity' : {
-                'trycatch' : true
-            }
-        }));
 });
 
 // Generate PageSpeed Insights.
@@ -706,4 +682,4 @@ gulp.task('test', [
 ////////////////////////////////////////
 
 // Defines a default task
-gulp.task('default', ['lint', 'test', 'plato']);
+gulp.task('default', ['lint', 'test', 'build']);
