@@ -11,9 +11,11 @@ reports/**
 typings/**
 
 # Files
-.DS_Store
 .env.yml
 .env.*.yml
-.Thumbs.db
 npm-debug.log
 phantomjsdriver.log
+
+# Crap
+.DS_Store
+.Thumbs.db
