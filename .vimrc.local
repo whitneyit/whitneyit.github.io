@@ -13,10 +13,12 @@ set wildignore+=*/reports/**
 set wildignore+=*/typings/**
 
 " Files
-set wildignore+=*.DS_Store
-set wildignore+=*.Thumbs.db
 set wildignore+=*npm-debug.log
 set wildignore+=*phantomjsdriver.log
+
+" Crap
+set wildignore+=*.DS_Store
+set wildignore+=*.Thumbs.db
 
 " Nerdtree specific ignore
 let NERDTreeIgnore += ['^.git$', '^.sass-cache$', '^.tsc$', '^_site$', '^assets$', '^bower_components$', '^coverage$', '^dist$', '^docs$', '^node_modules$', '^reports', '^typings$', '^npm-debug.log$', '^phantomjsdriver.log']
