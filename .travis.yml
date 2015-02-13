@@ -2,39 +2,60 @@ language: node_js
 node_js:
   - '0.10'
 
+env:
+  global:
+    # Define global environment variables.
+    - LOGS_DIR=/tmp/ci-build/logs
+
+    # Galen specific variables.
+    - GALEN_VERSION=1.5.3
+    - GALEN_TMP=/tmp/galen-$RANDOM
+    - GALEN_FOLDER=galen-bin-$GALEN_VERSION
+    - GALEN_URL=https://github.com/galenframework/galen/releases/download/galen-$GALEN_VERSION/$GALEN_FOLDER.zip
+    - GALEN_ZIP=$GALEN_TMP/$GALEN_FOLDER.zip
+    - GALEN_BIN=$GALEN_TMP/$GALEN_FOLDER/galen
+    - GALEN_JAR=$GALEN_TMP/$GALEN_FOLDER/galen.jar
+
 before_install:
-  # Check Java Install
+  # Check Java Install.
   - java -version
 
-  # Download and install Galen
-  - wget https://github.com/galenframework/galen/releases/download/galen-1.5.3/galen-bin-1.5.3.zip
-  - unzip galen-bin-1.5.3.zip
-  - sudo mv galen-bin-1.5.3/galen /usr/local/bin
-  - sudo mv galen-bin-1.5.3/galen.jar /usr/local/bin
-  - rm -rf galen-bin-1.5.3
-  - rm galen-bin-1.5.3.zip
-
-  # Configure npm
+  # Configure npm.
   - npm config set spin false
   - npm config set loglevel http
 
-  # Install project build tools
+  # Download and install Galen.
+  - wget $GALEN_URL -P $GALEN_TMP
+  - unzip $GALEN_ZIP -d $GALEN_TMP
+  - sudo mv $GALEN_BIN $GALEN_JAR /usr/local/bin
+  - rm -rf $GALEN_TMP
+
+  # Check Galen Install.
+  - galen --version
+
+install:
+  # Install dependency management tools.
   - npm install -g bower
   - npm install -g gulp
   - npm install -g tsd
 
-install:
-  # Install dependencies
+  # Install project dependencies.
   - bower install --config.interactive=false
   - tsd update
   - npm install
 
+before_script:
+  # Prepare our logs directory.
+  - mkdir -p $LOGS_DIR
+
 script:
-  # Run the tests seperatly so as not to block PhantomJS
-  - gulp test:scss
-  - gulp test:ts
-  - gulp test:ui
+  # This script will be called multiple times per a build matrix.
+  - ./build/scripts/travis/run_tests
+
+after_script:
+  # Dump all the logs to the screen.
+  - ./build/scripts/travis/print_logs
 
 after_success:
-  # Report coverage to coveralls.io
+  # Report coverage to coveralls.
   - cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls

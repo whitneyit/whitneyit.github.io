@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# $LOGS_DIR is defined .in `.travis.yml`
+LOG_FILES=$LOGS_DIR/*
+
+# Loop over each logged file and dump it to the screen
+for FILE in $LOG_FILES; do
+    echo -e "\n\n\n"
+    echo "================================================================================"
+    echo " $FILE"
+    echo "================================================================================"
+    cat $FILE
+done
+
+# vim: set syn=sh :

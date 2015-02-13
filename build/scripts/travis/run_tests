@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Run each of our tests individually so as not to block PhantomJS
+gulp test:scss
+gulp test:ts
+gulp test:ui
+
+# vim: set syn=sh :
