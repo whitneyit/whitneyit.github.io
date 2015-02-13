@@ -42,7 +42,6 @@ var
     image      = require('gulp-image'),
     footer     = require('gulp-footer'),
     jscs       = require('gulp-jscs'),
-    jsdoc      = require('gulp-jsdoc'),
     jsonlint   = require('gulp-jsonlint'),
     karma      = require('gulp-karma'),
     order      = require('gulp-order'),
@@ -547,14 +546,6 @@ gulp.task('serve:tests', serve({
 //               Tasks                //
 //                                    //
 ////////////////////////////////////////
-
-// Generates our docs using JSDoc.
-gulp.task('doc', ['clean:docs'], function () {
-    return gulp.src(['gulpfile.js', 'lib/**/*.js', 'src/ts/**/*.ts', 'tests/**/*.ts'])
-        .pipe(data(dataFn(stamp)))
-        .pipe(tmpl())
-        .pipe(jsdoc('docs'));
-});
 
 // Generate PageSpeed Insights.
 gulp.task('psi', function (done) {

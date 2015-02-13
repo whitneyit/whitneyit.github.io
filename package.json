@@ -46,7 +46,6 @@
     "gulp-if": "^1.2.4",
     "gulp-image": "^0.3.3",
     "gulp-jscs": "^1.1.0",
-    "gulp-jsdoc": "^0.1.4",
     "gulp-jsonlint": "^1.0.1",
     "gulp-karma": "0.0.4",
     "gulp-order": "^1.1.1",
