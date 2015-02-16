@@ -2,9 +2,7 @@
 
 var
     // Grab any system pacakges.
-    extend     = require('util')._extend,
     fs         = require('fs'),
-    path       = require('path'),
     spawn      = require('child_process').spawn,
 
     // Grab the `package.json` file.
@@ -13,6 +11,7 @@ var
     // Grab any packages they we have written.
     argToBool  = require('./lib/argToBool'),
     clean      = require('./lib/clean'),
+    dataFn     = require('./lib/dataFn'),
     galen      = require('./lib/galen'),
     isBranch   = require('./lib/isBranch'),
     log        = require('./lib/log'),
@@ -59,18 +58,6 @@ var
 
     // Define our cli argument aliases.
     argv = yargs.alias(args).argv,
-
-    // Add data gulp.src's vinyl Objects.
-    dataFn = function (dataObj) {
-        return function (vinyl) {
-            return extend(dataObj, {
-                'file' : {
-                    'name' : path.basename(vinyl.path),
-                    'dir'  : path.normalize(path.dirname(vinyl.path).substr(vinyl.cwd.length + 1) + '/')
-                }
-            });
-        };
-    },
 
     // Determine the environment and grab the `envData`.
     env = de(function (envName) {
