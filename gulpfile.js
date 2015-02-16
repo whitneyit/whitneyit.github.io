@@ -28,6 +28,8 @@ var
     // Grab gulp and its plugins.
     gulp       = require('gulp'),
     gutil      = require('gulp-util'),
+
+    // Grab the other gulp plugins.
     chmod      = require('gulp-chmod'),
     concat     = require('gulp-concat'),
     csslint    = require('gulp-csslint'),
@@ -223,6 +225,7 @@ gulp.task('clean', [
     'clean:coverage',
     'clean:dist',
     'clean:docs',
+    'clean:reports',
     'clean:root'
 ]);
 
