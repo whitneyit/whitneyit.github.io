@@ -650,11 +650,31 @@ gulp.task('test:ui', ['clean:reports'], function (done) {
 });
 
 // Run all of our tests.
-gulp.task('test', [
-    'test:scss',
-    'test:ts',
-    'test:ui'
-]);
+gulp.task('test', function (done) {
+    var
+        noop = function () {},
+        next = noop,
+        task,
+        tasks = [
+            'test:scss',
+            'test:ts',
+            'test:ui'
+        ];
+    gulp.on('task_stop', function (event) {
+        if (event.task === task) {
+            next();
+        }
+    });
+    async.mapSeries(tasks, function (_task_, _next_) {
+        task = _task_;
+        next = _next_;
+        gulp.start(task);
+    }, function () {
+        next = noop;
+        task = '';
+        done();
+    });
+});
 
 ////////////////////////////////////////
 //                                    //
