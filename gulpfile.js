@@ -1,7 +1,7 @@
 'use strict';
 
 var
-    // Grab any system pacakges.
+    // Grab any system packages.
     fs         = require('fs'),
     spawn      = require('child_process').spawn,
 
