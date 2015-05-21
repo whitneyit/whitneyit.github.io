@@ -31,7 +31,7 @@ declare module jasmine {
  *
  * @param {Error} err - The Error supplied by `requirejs`.
  *
- * @return {Void}
+ * @return {void}
  */
 requirejs.onError = (err) => {
 
