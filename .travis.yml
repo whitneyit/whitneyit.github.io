@@ -22,7 +22,9 @@ before_install:
 
   # Configure npm.
   - npm config set spin false
-  - npm config set loglevel http
+
+  # Update npm.
+  - npm install --global npm
 
   # Download and install Galen.
   - wget $GALEN_URL -P $GALEN_TMP
